@@ -1,5 +1,4 @@
-const config = require("../config.json");
-const Discord = require("discord.js");
+// This command is unfinished, and is not commented for that reason.
 
 exports.run = (client, message, args) => {
   function makeChannel(message){
