@@ -40,8 +40,7 @@ fs.readdir("./commands/", (err, files) => {
 client.on("message", message => {
   if (!message.guild) {
     message.channel.send("Unfortunately, I currently only work on servers. Sorry!")
-    return;
-  }
+  } return;
   if (message.author.bot) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
 
