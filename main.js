@@ -39,7 +39,7 @@ fs.readdir("./commands/", (err, files) => {
 
 client.on("message", message => {
   if (!message.guild) {
-    message.channel.send("Unfortunately, I currently on work on servers. Sorry!")
+    message.channel.send("Unfortunately, I currently only work on servers. Sorry!")
     return;
   }
   if (message.author.bot) return;
