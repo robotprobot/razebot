@@ -1,10 +1,13 @@
-// BOT FRAMEWORK FOR A DISCORD SERVER
+// BOT FRAMEWORK FOR A DISCORD SERVER - CODENAME RAZEBOT
 // USING DISCORD.JS LIBRARIES
 // CREATED 24/09/2017
-// MADE BY STEVEN WHEELER
+// MADE BY STEVEN WHEELER (robotprobot#8211)
 
 // main.js is the main file for the bot
 // included should be a commands folder, and a config.json.
+
+// Bot is partially modifiable and can be changed via config.json.
+// (Do not change the token in config.json. This will break the connection to Discord!)
 
 const Discord = require("discord.js");
 const client = new Discord.Client();
