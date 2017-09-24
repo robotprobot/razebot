@@ -1,5 +1,5 @@
 // BOT FRAMEWORK FOR A DISCORD SERVER - CODENAME RAZEBOT
-// USING DISCORD.JS LIBRARIES
+// USING DISCORD.JS LIBRARIES AND THE OFFICIAL DISCORD API
 // CREATED 24/09/2017
 // MADE BY STEVEN WHEELER (robotprobot#8211)
 
@@ -13,6 +13,8 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const config = require("./config.json");
 const fs = require("fs");
+
+client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
 client.on("ready", () => {
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
@@ -36,6 +38,10 @@ fs.readdir("./commands/", (err, files) => {
 });
 
 client.on("message", message => {
+  if (!message.guild) {
+    message.channel.send("Unfortunately, I currently on work on servers. Sorry!")
+    return;
+  }
   if (message.author.bot) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
 
@@ -53,5 +59,3 @@ client.on("message", message => {
     console.log("Informed user command is unrecognised.")
   }
 });
-
-client.login(config.token);
