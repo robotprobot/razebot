@@ -15,10 +15,12 @@ const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
 const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
+//const registeredUsers = require("./stats/registeredusers.json"); // Load a list of registered players
 
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
 client.on("ready", () => {
+  //let userPoints = JSON.parse(fs.readFileSync("./stats/registeredusers.json", "utf8"));
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log("V1.0.0");
@@ -29,6 +31,16 @@ client.on("ready", () => {
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
 });
+
+//client.on("guildMemberAdd", (member) => {
+//  var playerData = `./stats/${member}.json`
+//  if (!playerData.exists()) {
+//    fs.writeFileSync(playerData, function(err) {
+//    if(err) {
+        //return console.log(err);
+//    }
+//    console.log("The file was saved!");
+//});
 
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
