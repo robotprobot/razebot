@@ -1,3 +1,5 @@
+// This needs to send a message containing the ping when requested.
+
 const config = require("../config.json");
 
 exports.run = (client, message, args) => {
