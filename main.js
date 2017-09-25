@@ -30,7 +30,7 @@ client.on("ready", () => {
   console.log(""); // Spacing
 });
 
-client.on("guildMemberAdd", (member) => { // Preparing the STATSTRACK file for a joining member if new
+client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
   var playerData = `./stats/${member}.json`; // Tells system to use UserID as filename
   if (!playerData.exists()) { // If the file does not already exist (i.e a brand new user), generate file
     console.log("New client detected. Generating stats file."); // Alert in console that this has happened
@@ -43,7 +43,7 @@ client.on("guildMemberAdd", (member) => { // Preparing the STATSTRACK file for a
       stream.write('  "level": 0\n');
       stream.write('}\n'); // Finish the basic template
       stream.end(); // Close the file and save
-    })
+    });
   };
 
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
