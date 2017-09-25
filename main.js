@@ -31,14 +31,15 @@ client.on("ready", () => {
 });
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
-  var playerData = `./stats/${member}.json`; // Tells system to use UserID as filename
+  var newuserid = (member).slice(3,20);
+  var playerData = `./stats/${newuserid}.json`; // Tells system to use UserID as filename
   if (!fs.existsSync(playerData)) { // If the file does not already exist (i.e a brand new user), generate file
     console.log("New client detected. Generating stats file."); // Alert in console that this has happened
     //fs.writeFile(playerData);
     var stream = fs.createWriteStream(playerData); // Create the file and prepare it
     stream.once('open', function(fd) { // Open the file to write to it
       stream.write('{\n'); // Write the basic template
-      stream.write('  "playername": ' + member + '\n'); // Include the UserID in file for reading later
+      stream.write('  "userid": ' + member + '\n'); // Include the UserID in file for reading later
       stream.write('  "points": 0\n');
       stream.write('  "wins": 0\n');
       stream.write('  "level": 0\n');
