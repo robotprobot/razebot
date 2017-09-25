@@ -15,12 +15,10 @@ const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
 const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
-//const registeredUsers = require("./stats/registeredusers.json"); // Load a list of registered players
 
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
 client.on("ready", () => {
-  //let userPoints = JSON.parse(fs.readFileSync("./stats/registeredusers.json", "utf8"));
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log("V1.0.0");
@@ -32,15 +30,20 @@ client.on("ready", () => {
   console.log(""); // Spacing
 });
 
-//client.on("guildMemberAdd", (member) => {
-//  var playerData = `./stats/${member}.json`
-//  if (!playerData.exists()) {
-//    fs.writeFileSync(playerData, function(err) {
-//    if(err) {
-        //return console.log(err);
-//    }
-//    console.log("The file was saved!");
-//});
+client.on("guildMemberAdd", (member) => { // Preparing the STATSTRACK file for a joining member if new
+  var playerData = `./stats/${member}.json` // Tells system to use UserID as filename
+  if (!playerData.exists()) { // If the file does not already exist (i.e a brand new user), generate file
+    console.log("New client detected. Generating stats file.") // Alert in console that this has happened
+    var stream = fs.createWriteStream(playerData); // Create the file and prepare it
+    stream.once('open', function(fd) { // Open the file to write to it
+      stream.write('{\n'); // Write the basic template
+      stream.write('  "playername": ' + member + '\n'); // Include the UserID in file for reading later
+      stream.write('  "points": 0\n');
+      stream.write('  "wins": 0\n');
+      stream.write('  "level": 0\n');
+      stream.write('}\n'); // Finish the basic template
+      stream.end(); // Close the file and save
+}});
 
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
