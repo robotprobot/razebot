@@ -74,7 +74,7 @@ client.on("message", message => {
 
   try {
     let commandFile = require(`./commands/${command}.js`); // Search for a corrosponding command
-    commandFile.run(client, message, args); // If command exits, run it
+    commandFile.run(client, message, args); // If command exists, run it
   } catch (err) { // Else tell user that command was not found
     //console.error(err);
     console.log("Unrecognised command entered with a prefix.");
