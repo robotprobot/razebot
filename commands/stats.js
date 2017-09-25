@@ -1,11 +1,10 @@
 // This needs to take the requesters userID, search for it in the stats directory and then pull up results.
 
 const config = require("../config.json"); // Require access to the config.json
-const statsFolder = require("../stats"); // Require access to the stats folder
 const fs = require("fs"); // Require the ability to read and write with the filesystem
 
 exports.run = (client, message, args) => {
-  var userStats = statsFolder + " " + client;
+  var userStats = "../stats/" + client;
     console.log("Command 'stats' used.") // Log that command was used in console
     message.channel.send({embed: { // Prepare a embed
       color: 3447003,
