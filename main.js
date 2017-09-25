@@ -74,3 +74,4 @@ client.on("message", message => {
     console.log("Informed user command is unrecognised.");
   }
 });
+});
