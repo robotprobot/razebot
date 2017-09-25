@@ -1,4 +1,7 @@
+const config = require("../config.json");
+
 exports.run = (client, message, args) => {
+  //if (!message.)
   let newPrefix = message.content.split(" ").slice(1,2)[0]; // Cut off random characters
   config.prefix = newPrefix; // Put new prefix into config.json
 
