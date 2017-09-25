@@ -32,7 +32,7 @@ client.on("ready", () => {
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
   var unformatteduserid = `${member}` // Take the original UserID
-  var newuserid = unformatteduserid.slice(3,20); // Remove any weird characters
+  var newuserid = unformatteduserid.slice(2,20); // Remove any weird characters
   var playerData = `./stats/${newuserid}.json`; // Tells system to use the formatted UserID as filename
   if (!fs.existsSync(playerData)) { // If the file does not already exist (i.e a brand new user), generate file
     console.log("New client detected. Generating stats file."); // Alert in console that this has happened
