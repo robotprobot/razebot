@@ -19,6 +19,12 @@ const fs = require("fs"); // Prepare file reading
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
 client.on("ready", () => {
+
+  var statsDirectory = config.statsDirectory // Get the stats folder name and prepare for read
+  if (!fs.existsSync(statsDirectory)) { // If specified folder does not exist...
+    fs.mkdirSync(statsDirectory); // Create specified folder.
+  }
+
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log("V1.0.0");
@@ -29,6 +35,24 @@ client.on("ready", () => {
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
 });
+
+client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
+  var unformatteduserid = `${member}` // Take the original UserID
+  var newuserid = unformatteduserid.slice(2,20); // Remove any weird characters
+  var playerData = `./stats/${newuserid}.json`; // Tells system to use the formatted UserID as filename
+  if (!fs.existsSync(playerData)) { // If the file does not already exist (i.e a brand new user), generate file
+    console.log("New client detected. Generating stats file."); // Alert in console that this has happened
+    var stream = fs.createWriteStream(playerData); // Create the file and prepare it
+    stream.once('open', function(fd) { // Open the file to write to it
+      stream.write('{\n'); // Write the basic template
+      stream.write('  "userid": ' + member + '\n'); // Include the UserID in file for reading later
+      stream.write('  "points": 0\n');
+      stream.write('  "wins": 0\n');
+      stream.write('  "level": 0\n');
+      stream.write('}\n'); // Finish the basic template
+      stream.end(); // Close the file and save
+    });
+  };
 
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
@@ -55,6 +79,7 @@ client.on("message", message => {
     console.log("Unrecognised command entered with a prefix.");
     console.log("Command was: " + command);
     message.channel.send("Command not recognised");
-    console.log("Informed user command is unrecognised.")
+    console.log("Informed user command is unrecognised.");
   }
+});
 });
