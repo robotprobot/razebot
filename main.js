@@ -20,9 +20,8 @@ client.login(config.token); // Connect to the Discord service and provide bots i
 
 client.on("ready", () => {
 
-  var statsDirectory = config.statsDirectory // Get the stats folder name and prepare for read
-  if (!fs.existsSync(statsDirectory)) { // If specified folder does not exist...
-    fs.mkdirSync(statsDirectory); // Create specified folder.
+  if (!fs.existsSync(config.statsDirectory)) { // If specified folder does not exist...
+    fs.mkdirSync(config.statsDirectory); // Create specified folder.
   }
 
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
