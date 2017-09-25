@@ -1,4 +1,5 @@
 const config = require("../config.json");
+const fs = require("fs"); // Prepare file reading
 
 exports.run = (client, message, args) => {
   //if (!message.)
