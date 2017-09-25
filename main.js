@@ -31,9 +31,9 @@ client.on("ready", () => {
 });
 
 client.on("guildMemberAdd", (member) => { // Preparing the STATSTRACK file for a joining member if new
-  var playerData = `./stats/${member}.json` // Tells system to use UserID as filename
+  var playerData = `./stats/${member}.json`; // Tells system to use UserID as filename
   if (!playerData.exists()) { // If the file does not already exist (i.e a brand new user), generate file
-    console.log("New client detected. Generating stats file.") // Alert in console that this has happened
+    console.log("New client detected. Generating stats file."); // Alert in console that this has happened
     var stream = fs.createWriteStream(playerData); // Create the file and prepare it
     stream.once('open', function(fd) { // Open the file to write to it
       stream.write('{\n'); // Write the basic template
@@ -43,7 +43,8 @@ client.on("guildMemberAdd", (member) => { // Preparing the STATSTRACK file for a
       stream.write('  "level": 0\n');
       stream.write('}\n'); // Finish the basic template
       stream.end(); // Close the file and save
-    };
+    });
+  }
 
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
@@ -70,6 +71,6 @@ client.on("message", message => {
     console.log("Unrecognised command entered with a prefix.");
     console.log("Command was: " + command);
     message.channel.send("Command not recognised");
-    console.log("Informed user command is unrecognised.")
+    console.log("Informed user command is unrecognised.");
   }
 });
