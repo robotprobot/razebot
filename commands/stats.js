@@ -5,7 +5,8 @@ const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Require the ability to read and write with the filesystem
 
 exports.run = (client, message, args) => {
-  const userStats = (`../stats/${message.author.id}.json`);
+  const userID = message.author.id;
+  const userStats = (`../stats/${userID}.json`);
 
   const embed = new Discord.RichEmbed()
     .setTitle("Stats for " + message.author.username)
