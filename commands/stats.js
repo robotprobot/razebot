@@ -12,7 +12,7 @@ exports.run = (client, message, args) => {
   var userLevel = userStats.level;
 
   const embed = new Discord.RichEmbed()
-    .setTitle("Stats for " + message.author.username)
+    .setTitle("Stats for " + message.author.username + "(" + message.author.id + ")")
     .setColor(0x00AE86)
     .setTimestamp()
     .addField("Points", userPoints, true)
