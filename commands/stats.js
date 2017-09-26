@@ -4,7 +4,7 @@ const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Require the ability to read and write with the filesystem
 
 exports.run = (client, message, args) => {
-  var userStats = "../stats/" + message.author.id;
+  var userStats = "../stats/" + message.author.id + ".json";
     console.log("Command 'stats' used.") // Log that command was used in console
     message.channel.send({embed: { // Prepare a embed
       color: 3447003,
