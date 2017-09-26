@@ -44,10 +44,10 @@ client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a j
     var stream = fs.createWriteStream(playerData); // Create the file and prepare it
     stream.once('open', function(fd) { // Open the file to write to it
       stream.write('{\n'); // Write the basic template
-      stream.write('  "userid": ' + newuserid + '\n'); // Include the UserID in file for reading later
-      stream.write('  "points": 0\n');
-      stream.write('  "wins": 0\n');
-      stream.write('  "losses": 0\n');
+      stream.write('  "userid": ' + newuserid + ',\n'); // Include the UserID in file for reading later
+      stream.write('  "points": 0,\n');
+      stream.write('  "wins": 0,\n');
+      stream.write('  "losses": 0,\n');
       stream.write('  "level": 0\n');
       stream.write('}\n'); // Finish the basic template
       stream.end(); // Close the file and save
