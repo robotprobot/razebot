@@ -5,14 +5,14 @@ const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Require the ability to read and write with the filesystem
 
 exports.run = (client, message, args) => {
-  var userStats = "../stats/" + message.author.id + ".json";
+  var userStats = `../stats/${message.author.ID}.json`;
   var userPoints = userStats.points;
   var userWins = userStats.wins;
   var userLosses = userStats.losses;
   var userLevel = userStats.level;
 
   const embed = new Discord.RichEmbed()
-    .setTitle("Stats for " + message.author.username + "(" + message.author.id + ")")
+    .setTitle("Stats for " + message.author.username)
     .setColor(0x00AE86)
     .setTimestamp()
     .addField("Points", userPoints, true)
