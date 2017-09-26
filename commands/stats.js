@@ -5,35 +5,44 @@ const fs = require("fs"); // Require the ability to read and write with the file
 
 exports.run = (client, message, args) => {
   var userStats = "../stats/" + message.author.id + ".json";
-    console.log("Command 'stats' used.") // Log that command was used in console
-    message.channel.send({embed: { // Prepare a embed
-      color: 3447003,
-      author: {
-        name: message.author.username,
-        icon_url: message.author.avatarURL
-      },
-      title: "Stats for " + client,
-      fields: [{
-        name: "Points:",
-        value: `userStats.points`
-      },
-      {
-        name: "Wins:",
-        value: `userStats.wins`
-      },
-      {
-        name: "Losses:",
-        value: `userStats.losses`
-      },
-      {
-        name: "Level:",
-        value: `userStats.level`
-      }
-    ],
-      timestamp: new Date(),
-      footer: {
-      icon_url: client.user.avatarURL,
-      text: config.botName
-    } // Finalise and send
-    }});
+  const embed = new Discord.RichEmbed()
+    .setTitle("Stats for " + message.author.username)
+    .setColor(0x00AE86)
+    .setTimestamp()
+    .addField("Points", userStats.points, true)
+    .addField("Wins", userStats.wins, true)
+    .addField("Losses", userStats.losses, true)
+    .addField("Level", userStats.level, true)
+    message.channel.send({embed});
+
+  //  console.log("Command 'stats' used.") // Log that command was used in console
+  //  message.channel.send({embed: { // Prepare a embed
+  //    color: 3447003,
+  //    author: {
+  //      icon_url: message.author.avatarURL
+  //    },
+  //    title: "Stats for " + message.author.username,
+  //    fields: [{
+  //      name: "Points:",
+  //      value: `userStats.points`
+  //    },
+  //    {
+  //      name: "Wins:",
+  //      value: `userStats.wins`
+  //    },
+  //    {
+  //      name: "Losses:",
+  //      value: `userStats.losses`
+  //    },
+  //    {
+  //      name: "Level:",
+  //      value: `userStats.level`
+  //    }
+  //  ],
+  //    timestamp: new Date(),
+  //    footer: {
+  //    icon_url: client.user.avatarURL,
+  //    text: config.botName
+  //  } // Finalise and send
+  //  }});
 } // Go back to main.js
