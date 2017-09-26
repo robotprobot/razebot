@@ -15,19 +15,19 @@ exports.run = (client, message, args) => {
       title: "Stats for " + client,
       fields: [{
         name: "Points:",
-        value: userStats.points
+        value: `userStats.points`
       },
       {
         name: "Wins:",
-        value: userStats.wins
+        value: `userStats.wins`
       },
       {
         name: "Losses:",
-        value: userStats.losses
+        value: `userStats.losses`
       },
       {
         name: "Level:",
-        value: userStats.level,
+        value: `userStats.level`
       }
     ],
       timestamp: new Date(),
