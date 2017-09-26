@@ -9,8 +9,8 @@ exports.run = (client, message, args) => {
     message.channel.send({embed: { // Prepare a embed
       color: 3447003,
       author: {
-        name: client,
-        icon_url: client.user.avatarURL
+        name: message.author.username,
+        icon_url: message.author.avatarURL
       },
       title: "Stats for " + client,
       fields: [{
