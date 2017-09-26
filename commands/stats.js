@@ -1,5 +1,6 @@
 // This needs to take the requesters userID, search for it in the stats directory and then pull up results.
 
+const Discord = require("discord.js"); // Require Discord.js for app to run
 const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Require the ability to read and write with the filesystem
 
