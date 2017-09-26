@@ -5,6 +5,7 @@ const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Require the ability to read and write with the filesystem
 
 exports.run = (client, message, args) => {
+  fs.readdir("../stats/", (err, files) => { // Read the stats folder and prepare stats for use
   const userID = message.author.id;
   const userStats = `../stats/${userID}.json`;
 
