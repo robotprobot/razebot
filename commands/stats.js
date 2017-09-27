@@ -9,7 +9,7 @@ exports.run = (client, message, args) => {
   const userStats = `../stats/${userID}.json`;
 
   const embed = new Discord.RichEmbed()
-    .setTitle("Stats for " + message.author.username)
+    .setTitle("Stats for " + message.author.username + client)
     .setColor(0x00AE86)
     .setTimestamp()
     .addField("Points", userStats.points, true)
