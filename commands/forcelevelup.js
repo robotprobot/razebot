@@ -10,8 +10,8 @@ exports.run = (client, message, args) => {
   var file = require(fileName); // Find the file that matches the userID
   if (userID == config.ownerID) {
     // level up
-    userFile.points = +25; // Add 25 points
-    userFile.level = +1; // Increase level by 1 (which is 25 points)
+    file.points = +25; // Add 25 points
+    file.level = +1; // Increase level by 1 (which is 25 points)
     fs.writeFileSync(fileName, JSON.stringify(file, null, 1), function (err) {
       if (err) {
         console.log("An error occured when force levelling up. Likely could not change file.");
