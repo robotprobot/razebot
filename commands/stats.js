@@ -7,15 +7,16 @@ const fs = require("fs"); // Require the ability to read and write with the file
 exports.run = (client, message, args) => {
   var userID = message.author.id;
   const userStats = `../stats/${userID}.json`;
+  let userFile = JSON.parse(fs.readFileSync(userStats, "utf8"));
 
-  const embed = new Discord.RichEmbed()
+  var embed = new Discord.RichEmbed()
     .setTitle("Stats for " + message.author.username)
     .setColor(0x00AE86)
     .setTimestamp()
-    .addField("Points", `${userStats.points}`, true)
-    .addField("Wins", `${userStats.wins}`, true)
-    .addField("Losses", `${userStats.losses}`, true)
-    .addField("Level", `${userStats.level}`, true)
+    .addField("Points", `${userFile.points}`, true)
+    .addField("Wins", `${userFile.wins}`, true)
+    .addField("Losses", `${userFile.losses}`, true)
+    .addField("Level", `${userFile.level}`, true)
     message.channel.send({embed});
 
   //  console.log("Command 'stats' used.") // Log that command was used in console
