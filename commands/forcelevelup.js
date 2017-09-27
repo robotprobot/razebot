@@ -12,13 +12,13 @@ exports.run = (client, message, args) => {
     // level up
     userFile.points = 25; // Add 25 points
     userFile.level = 1; // Increase level by 1 (which is 25 points)
-    fs.writeFile(`../stats/${userID}.json`, data, function (err) {
+    fs.writeFile(`${userFile}`, data, function (err) {
       if (err) {
-        console.log("There has been an error saving player scores.");
+        console.log("An error occured when force levelling up. Likely could not change file.");
+        message.channel.send("An error has occured. See console for details.");
         return;
       }
-      console.log("Player scores saved successfully.");
-      console.log("Force level up was used and completed.")
+      console.log("Force level up was used and completed successfully.")
       message.channel.send("Force levelup complete. New level is: " + userFile.level);
     });
   } else {
