@@ -38,6 +38,35 @@ client.on("guildDelete", guild => { // Notes in console when bot has left or bee
   console.log(`Disconnected/removed from: ${guild.name} (id: ${guild.id})`);
 });
 
+fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
+  if (err) return console.error(err); // If reading fails, write to console and abort
+  files.forEach(file => { // Prepare each file
+    let eventFunction = require(`./commands/${file}`);
+    let eventName = file.split(".")[0];
+    client.on(eventName, (...args) => eventFunction.run(client, ...args));
+  });
+});
+
+client.on("message", message => {
+  if (!message.guild) return; // If message is not in server (like a dm), reject
+  if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
+  if (!message.content.startsWith(config.prefix)) return; // If the message does not contain the prefix, reject
+
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g); // If message accepted, remove prefix
+  const command = args.shift().toLowerCase(); // Change resulting message to lowercase
+
+  try {
+    let commandFile = require(`./commands/${command}.js`); // Search for a corrosponding command
+    commandFile.run(client, message, args); // If command exists, run it
+  } catch (err) { // Else tell user that command was not found
+    console.error(err);
+    console.log("Unrecognised command entered with a prefix.");
+    console.log("Command was: " + command);
+    message.channel.send("Command not recognised");
+    console.log("Informed user command is unrecognised.");
+  }
+});
+
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
   var unformatteduserid = `${member}` // Take the original UserID
   var newuserid = unformatteduserid.replace(/\D/g,''); // Remove any characters that are not numbers
@@ -56,33 +85,4 @@ client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a j
       stream.end(); // Close the file and save
     });
   };
-
-fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
-  if (err) return console.error(err); // If reading fails, write to console and abort
-  files.forEach(file => { // Prepare each file
-    let eventFunction = require(`./commands/${file}`);
-    let eventName = file.split(".")[0];
-    client.on(eventName, (...args) => eventFunction.run(client, ...args));
-  });
-});
-
-client.on("message", message => {
-  if (!message.guild) return; // If message is not in server (like a dm), reject
-  if (message.author.bot) return; // If the message the bot wants to respond to is from the bot, reject to prevent loops
-  if(message.content.indexOf(config.prefix) !== 0) return; // If the message does not contain the prefix, reject
-
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g); // If message accepted, remove prefix
-  const command = args.shift().toLowerCase(); // Change resulting message to lowercase
-
-  try {
-    let commandFile = require(`./commands/${command}.js`); // Search for a corrosponding command
-    commandFile.run(client, message, args); // If command exists, run it
-  } catch (err) { // Else tell user that command was not found
-    console.error(err);
-    console.log("Unrecognised command entered with a prefix.");
-    console.log("Command was: " + command);
-    message.channel.send("Command not recognised");
-    console.log("Informed user command is unrecognised.");
-  }
-});
 });
