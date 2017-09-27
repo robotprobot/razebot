@@ -6,13 +6,12 @@ const fs = require("fs");
 
 exports.run = (client, message, args) => {
   var userID = message.author.id; // Get userID
-  var data = JSON.stringify(config)
   const userFile = require(`../stats/${userID}.json`); // Find the file that matches the userID
   if (userID == config.ownerID) {
     // level up
     userFile.points = +25; // Add 25 points
     userFile.level = +1; // Increase level by 1 (which is 25 points)
-    fs.writeFile(`${userFile}`, data, function (err) {
+    fs.writeFileSync(`${userFile}`, JSON.stringify(content) function (err) {
       if (err) {
         console.log("An error occured when force levelling up. Likely could not change file.");
         message.channel.send("An error has occured. See console for details.");
