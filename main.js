@@ -68,8 +68,8 @@ fs.readdir("./commands/", (err, files) => { // Read the commands folder and prep
 
 client.on("message", message => {
   if (!message.guild) return; // If message is not in server (like a dm), reject
-  if (message.author.bot) return; // If the message the bot wants to respond to is from the bot, reject to prevent loops
-  if(message.content.indexOf(config.prefix) !== 0) return; // If the message does not contain the prefix, reject
+  if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
+  if (!message.content.startsWith(config.prefix)) return; // If the message does not contain the prefix, reject
 
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g); // If message accepted, remove prefix
   const command = args.shift().toLowerCase(); // Change resulting message to lowercase
