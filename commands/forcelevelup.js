@@ -7,7 +7,7 @@ const fs = require("fs");
 exports.run = (client, message, args) => {
   var userID = message.author.id; // Get userID
   const userFile = require(`../stats/${userID}.json`); // Find the file that matches the userID
-  if userID == config.ownerID {
+  if (userID == config.ownerID) {
     // level up
     userFile.points = "25"; // Add 25 points
     userFile.level = "1"; // Increase level by 1 (which is 25 points)
