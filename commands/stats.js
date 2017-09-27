@@ -9,13 +9,13 @@ exports.run = (client, message, args) => {
   const userStats = `../stats/${userID}.json`;
 
   const embed = new Discord.RichEmbed()
-    .setTitle("Stats for " + message.author.username + client)
+    .setTitle("Stats for " + message.author.username)
     .setColor(0x00AE86)
     .setTimestamp()
-    .addField("Points", userStats.points, true)
-    .addField("Wins", userStats.wins, true)
-    .addField("Losses", userStats.losses, true)
-    .addField("Level", userStats.level, true)
+    .addField("Points", userStats.points)
+    .addField("Wins", userStats.wins)
+    .addField("Losses", userStats.losses)
+    .addField("Level", userStats.level)
     message.channel.send({embed});
 
   //  console.log("Command 'stats' used.") // Log that command was used in console

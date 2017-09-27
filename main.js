@@ -19,11 +19,6 @@ const fs = require("fs"); // Prepare file reading
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
 client.on("ready", () => {
-
-  //if (!fs.existsSync(config.statsDirectory)) { // If specified folder does not exist...
-  //  fs.mkdirSync(config.statsDirectory); // Create specified folder.
-  //}
-
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log("V1.0.0");
@@ -34,6 +29,14 @@ client.on("ready", () => {
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
 });
+
+client.on("guildCreate", guild => { // Notes in console when bot has joined a server
+  console.log(`Joined server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
+}
+
+client.on("guildDelete", guild => { // Notes in console when bot has left or been removed from a server
+  console.log(`Disconnected/removed from: ${guild.name} (id: ${guild.id})`);
+}
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
   var unformatteduserid = `${member}` // Take the original UserID
