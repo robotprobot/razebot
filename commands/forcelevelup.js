@@ -10,8 +10,8 @@ exports.run = (client, message, args) => {
   const userFile = require(`../stats/${userID}.json`); // Find the file that matches the userID
   if (userID == config.ownerID) {
     // level up
-    userFile.points = 25; // Add 25 points
-    userFile.level = 1; // Increase level by 1 (which is 25 points)
+    userFile.points = +25; // Add 25 points
+    userFile.level = +1; // Increase level by 1 (which is 25 points)
     fs.writeFile(`${userFile}`, data, function (err) {
       if (err) {
         console.log("An error occured when force levelling up. Likely could not change file.");
@@ -19,7 +19,7 @@ exports.run = (client, message, args) => {
         return;
       }
       console.log("Force level up was used and completed successfully.")
-      message.channel.send("Force levelup complete. New level is: " + userFile.level);
+      message.channel.send("Force level up complete. New level is: " + userFile.level);
     });
   } else {
     // deny level up
