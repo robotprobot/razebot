@@ -15,7 +15,7 @@ exports.run = (client, message, args) => {
     .addField("Points", userStats.points, true)
     .addField("Wins", userStats.wins, true)
     .addField("Losses", userStats.losses, true)
-    .addField("Level", userStats.level, true)
+    .addField("Level", `Current level is: ${userStats.level}`, true)
     message.channel.send({embed});
 
   //  console.log("Command 'stats' used.") // Log that command was used in console
