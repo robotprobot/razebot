@@ -5,17 +5,17 @@ const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Require the ability to read and write with the filesystem
 
 exports.run = (client, message, args) => {
-  const userID = message.author.id;
+  var userID = message.author.id;
   const userStats = `../stats/${userID}.json`;
 
   const embed = new Discord.RichEmbed()
     .setTitle("Stats for " + message.author.username)
     .setColor(0x00AE86)
     .setTimestamp()
-    .addField("Points", userStats.points, true)
-    .addField("Wins", userStats.wins, true)
-    .addField("Losses", userStats.losses, true)
-    .addField("Level", `Current level is: ${userStats.level}`, true)
+    .addField("Points", `${userStats.points}`, true)
+    .addField("Wins", `${userStats.wins}`, true)
+    .addField("Losses", `${userStats.losses}`, true)
+    .addField("Level", `${userStats.level}`, true)
     message.channel.send({embed});
 
   //  console.log("Command 'stats' used.") // Log that command was used in console
