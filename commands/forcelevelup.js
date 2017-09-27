@@ -20,7 +20,7 @@ exports.run = (client, message, args) => {
       console.log("Player scores saved successfully.");
       console.log("Force level up was used and completed.")
       message.channel.send("Force levelup complete. New level is: " + userFile.level);
-    }
+    });
   } else {
     // deny level up
     message.channel.send("Insufficient permissions");
