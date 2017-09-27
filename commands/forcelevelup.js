@@ -13,13 +13,14 @@ exports.run = (client, message, args) => {
     userFile.points = 25; // Add 25 points
     userFile.level = 1; // Increase level by 1 (which is 25 points)
     fs.writeFile(`../stats/${userID}.json`, data, function (err) {
-    if (err) {
-      console.log("There has been an error saving player scores.");
-      return;
+      if (err) {
+        console.log("There has been an error saving player scores.");
+        return;
+      }
+      console.log("Player scores saved successfully.");
+      console.log("Force level up was used and completed.")
+      message.channel.send("Force levelup complete. New level is: " + userFile.level);
     }
-    console.log("Player scores saved successfully.");
-    console.log("Force level up was used and completed.")
-    message.channel.send("Force levelup complete. New level is: " + userFile.level);
   } else {
     // deny level up
     message.channel.send("Insufficient permissions");
