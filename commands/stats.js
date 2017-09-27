@@ -5,48 +5,16 @@ const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Require the ability to read and write with the filesystem
 
 exports.run = (client, message, args) => {
-  var userID = message.author.id;
-  //let userFile = fs.readFile(`./stats/${userID}.json`);
-  const userFile = require(`../stats/${userID}.json`);
+  var userID = message.author.id; // Get userID
+  const userFile = require(`../stats/${userID}.json`); // Find the file that matches the userID
 
-  var embed = new Discord.RichEmbed()
+  var embed = new Discord.RichEmbed() // Prepare an embed
     .setTitle("Stats for " + message.author.username)
     .setColor(0x00AE86)
     .setTimestamp()
-    .addField("Points", userFile.points, true)
+    .addField("Points", userFile.points, true) // Fill in the areas with the correct numbers
     .addField("Wins", userFile.wins, true)
     .addField("Losses", userFile.losses, true)
     .addField("Level", userFile.level, true)
-    message.channel.send({embed});
-
-  //  console.log("Command 'stats' used.") // Log that command was used in console
-  //  message.channel.send({embed: { // Prepare a embed
-  //    color: 3447003,
-  //    author: {
-  //      icon_url: message.author.avatarURL
-  //    },
-  //    title: "Stats for " + message.author.username,
-  //    fields: [{
-  //      name: "Points:",
-  //      value: `userStats.points`
-  //    },
-  //    {
-  //      name: "Wins:",
-  //      value: `userStats.wins`
-  //    },
-  //    {
-  //      name: "Losses:",
-  //      value: `userStats.losses`
-  //    },
-  //    {
-  //      name: "Level:",
-  //      value: `userStats.level`
-  //    }
-  //  ],
-  //    timestamp: new Date(),
-  //    footer: {
-  //    icon_url: client.user.avatarURL,
-  //    text: config.botName
-  //  } // Finalise and send
-  //  }});
+    message.channel.send({embed}); // Send embed
 } // Go back to main.js
