@@ -6,12 +6,19 @@ const fs = require("fs");
 
 exports.run = (client, message, args) => {
   var userID = message.author.id; // Get userID
+  var data = JSON.stringify(config)
   const userFile = require(`../stats/${userID}.json`); // Find the file that matches the userID
   if (userID == config.ownerID) {
     // level up
     userFile.points = 25; // Add 25 points
     userFile.level = 1; // Increase level by 1 (which is 25 points)
-    fs.writeFileSync(userFile); // , JSON.stringify(config), (err) => console.error); // save file
+    fs.writeFile(`../stats/${userID}.json`, data, function (err) {
+    if (err) {
+      console.log("There has been an error saving player scores.");
+      return;
+    }
+    console.log("Player scores saved successfully.");
+    console.log("Force level up was used and completed.")
     message.channel.send("Force levelup complete. New level is: " + userFile.level);
   } else {
     // deny level up
