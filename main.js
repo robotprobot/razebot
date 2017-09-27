@@ -32,11 +32,11 @@ client.on("ready", () => {
 
 client.on("guildCreate", guild => { // Notes in console when bot has joined a server
   console.log(`Joined server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-}
+});
 
 client.on("guildDelete", guild => { // Notes in console when bot has left or been removed from a server
   console.log(`Disconnected/removed from: ${guild.name} (id: ${guild.id})`);
-}
+});
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
   var unformatteduserid = `${member}` // Take the original UserID
