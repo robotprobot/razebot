@@ -38,25 +38,6 @@ client.on("guildDelete", guild => { // Notes in console when bot has left or bee
   console.log(`Disconnected/removed from: ${guild.name} (id: ${guild.id})`);
 });
 
-client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
-  var unformatteduserid = `${member}` // Take the original UserID
-  var newuserid = unformatteduserid.replace(/\D/g,''); // Remove any characters that are not numbers
-  var playerData = `./stats/${newuserid}.json`; // Tells system to use the formatted UserID as filename
-  if (!fs.existsSync(playerData)) { // If the file does not already exist (i.e a brand new user), generate file
-    console.log("New client detected. Generating stats file."); // Alert in console that this has happened
-    var stream = fs.createWriteStream(playerData); // Create the file and prepare it
-    stream.once('open', function(fd) { // Open the file to write to it
-      stream.write('{\n'); // Write the basic template
-      stream.write(' "userid": ' + newuserid + ',\n'); // Include the UserID in file for reading later
-      stream.write(' "points": 0,\n');
-      stream.write(' "wins": 0,\n');
-      stream.write(' "losses": 0,\n');
-      stream.write(' "level": 0\n');
-      stream.write('}\n'); // Finish the basic template
-      stream.end(); // Close the file and save
-    });
-  };
-
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
   files.forEach(file => { // Prepare each file
@@ -85,4 +66,23 @@ client.on("message", message => {
     console.log("Informed user command is unrecognised.");
   }
 });
+
+client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
+  var unformatteduserid = `${member}` // Take the original UserID
+  var newuserid = unformatteduserid.replace(/\D/g,''); // Remove any characters that are not numbers
+  var playerData = `./stats/${newuserid}.json`; // Tells system to use the formatted UserID as filename
+  if (!fs.existsSync(playerData)) { // If the file does not already exist (i.e a brand new user), generate file
+    console.log("New client detected. Generating stats file."); // Alert in console that this has happened
+    var stream = fs.createWriteStream(playerData); // Create the file and prepare it
+    stream.once('open', function(fd) { // Open the file to write to it
+      stream.write('{\n'); // Write the basic template
+      stream.write(' "userid": ' + newuserid + ',\n'); // Include the UserID in file for reading later
+      stream.write(' "points": 0,\n');
+      stream.write(' "wins": 0,\n');
+      stream.write(' "losses": 0,\n');
+      stream.write(' "level": 0\n');
+      stream.write('}\n'); // Finish the basic template
+      stream.end(); // Close the file and save
+    });
+  };
 });
