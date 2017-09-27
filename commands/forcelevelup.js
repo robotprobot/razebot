@@ -11,7 +11,7 @@ exports.run = (client, message, args) => {
     // level up
     userFile.points = "25"; // Add 25 points
     userFile.level = "1"; // Increase level by 1 (which is 25 points)
-    fs.writeFile(userFile, JSON.stringify(config), (err) => console.error); // save file
+    fs.writeFile(`../stats/${userID}.json`, JSON.stringify(config), (err) => console.error); // save file
     message.channel.send("Force levelup complete. New level is: " + userFile.level);
   } else {
     // deny level up
