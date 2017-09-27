@@ -9,8 +9,8 @@ exports.run = (client, message, args) => {
   const userFile = require(`../stats/${userID}.json`); // Find the file that matches the userID
   if (userID == config.ownerID) {
     // level up
-    userFile.points = "25"; // Add 25 points
-    userFile.level = "1"; // Increase level by 1 (which is 25 points)
+    userFile.points = 25; // Add 25 points
+    userFile.level = 1; // Increase level by 1 (which is 25 points)
     fs.writeFile(`../stats/${userID}.json`, JSON.stringify(config), (err) => console.error); // save file
     message.channel.send("Force levelup complete. New level is: " + userFile.level);
   } else {
