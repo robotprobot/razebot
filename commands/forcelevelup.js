@@ -11,7 +11,7 @@ exports.run = (client, message, args) => {
     // level up
     file.points = +25; // Add 25 points
     file.level = +1; // Increase level by 1 (which is 25 points)
-    fs.writeFile(`../stats/${userID}.json`, JSON.stringify(`../stats/${userID}.json`), function (err) {
+    fs.writeFile(`../stats/${userID}.json`, function (err) {
       if (err) {
         console.log("An error occured when force levelling up. Likely could not change file.");
         message.channel.send("An error has occured. See console for details.");
