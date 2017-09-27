@@ -51,7 +51,7 @@ client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a j
       stream.write(' "points": 0,\n');
       stream.write(' "wins": 0,\n');
       stream.write(' "losses": 0,\n');
-      stream.write(' "level": 0,\n');
+      stream.write(' "level": 0\n');
       stream.write('}\n'); // Finish the basic template
       stream.end(); // Close the file and save
     });
