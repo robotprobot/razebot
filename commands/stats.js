@@ -12,7 +12,7 @@ exports.run = (client, message, args) => {
     .setTitle("Stats for " + message.author.username)
     .setColor(0x00AE86)
     .setTimestamp()
-    .addField("Points", `${userFile.points}`, true)
+    .addField("Points", userFile.points, true)
     .addField("Wins", `${userFile.wins}`, true)
     .addField("Losses", `${userFile.losses}`, true)
     .addField("Level", `${userFile.level}`, true)
