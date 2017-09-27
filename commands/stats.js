@@ -3,11 +3,10 @@
 const Discord = require("discord.js"); // Require Discord.js for app to run
 const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Require the ability to read and write with the filesystem
-var path = require("path");
 
 exports.run = (client, message, args) => {
   var userID = message.author.id;;
-  let userFile = JSON.parse(fs.readFile(path.join(__dirname + `/../stats/${userID}.json`)));
+  let userFile = JSON.parse(fs.readFile(`/../stats/${userID}.json`));
 
   var embed = new Discord.RichEmbed()
     .setTitle("Stats for " + message.author.username)
