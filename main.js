@@ -55,7 +55,7 @@ client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a j
       stream.write('}\n'); // Finish the basic template
       stream.end(); // Close the file and save
     });
-  }});
+  };
 
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
@@ -84,4 +84,5 @@ client.on("message", message => {
     message.channel.send("Command not recognised");
     console.log("Informed user command is unrecognised.");
   }
+});
 });
