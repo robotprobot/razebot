@@ -19,12 +19,6 @@ const fs = require("fs"); // Prepare file reading
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
 client.on("ready", () => {
-
-  var statsDirectory = config.statsDirectory // Get the stats folder name and prepare for read
-  if (!fs.existsSync(statsDirectory)) { // If specified folder does not exist...
-    fs.mkdirSync(statsDirectory); // Create specified folder.
-  }
-
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log("V1.0.0");
@@ -36,19 +30,28 @@ client.on("ready", () => {
   console.log(""); // Spacing
 });
 
+client.on("guildCreate", guild => { // Notes in console when bot has joined a server
+  console.log(`Joined server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
+});
+
+client.on("guildDelete", guild => { // Notes in console when bot has left or been removed from a server
+  console.log(`Disconnected/removed from: ${guild.name} (id: ${guild.id})`);
+});
+
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
   var unformatteduserid = `${member}` // Take the original UserID
-  var newuserid = unformatteduserid.slice(2,20); // Remove any weird characters
+  var newuserid = unformatteduserid.replace(/\D/g,''); // Remove any characters that are not numbers
   var playerData = `./stats/${newuserid}.json`; // Tells system to use the formatted UserID as filename
   if (!fs.existsSync(playerData)) { // If the file does not already exist (i.e a brand new user), generate file
     console.log("New client detected. Generating stats file."); // Alert in console that this has happened
     var stream = fs.createWriteStream(playerData); // Create the file and prepare it
     stream.once('open', function(fd) { // Open the file to write to it
       stream.write('{\n'); // Write the basic template
-      stream.write('  "userid": ' + member + '\n'); // Include the UserID in file for reading later
-      stream.write('  "points": 0\n');
-      stream.write('  "wins": 0\n');
-      stream.write('  "level": 0\n');
+      stream.write(' "userid": ' + newuserid + ',\n'); // Include the UserID in file for reading later
+      stream.write(' "points": 0,\n');
+      stream.write(' "wins": 0,\n');
+      stream.write(' "losses": 0,\n');
+      stream.write(' "level": 0\n');
       stream.write('}\n'); // Finish the basic template
       stream.end(); // Close the file and save
     });
@@ -73,9 +76,9 @@ client.on("message", message => {
 
   try {
     let commandFile = require(`./commands/${command}.js`); // Search for a corrosponding command
-    commandFile.run(client, message, args); // If command exits, run it
+    commandFile.run(client, message, args); // If command exists, run it
   } catch (err) { // Else tell user that command was not found
-    //console.error(err);
+    console.error(err);
     console.log("Unrecognised command entered with a prefix.");
     console.log("Command was: " + command);
     message.channel.send("Command not recognised");
