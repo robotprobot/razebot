@@ -7,7 +7,7 @@ const fs = require("fs"); // Require the ability to read and write with the file
 exports.run = (client, message, args) => {
   var userID = message.author.id;
   const userStats = `${userID}.json`;
-  let userFile = JSON.parse(fs.readFileSync(path.join(__dirname, '../stats/', userStats));
+  let userFile = JSON.parse(fs.readFileSync(path.join(__dirname, '../stats/', userStats)));
 
   var embed = new Discord.RichEmbed()
     .setTitle("Stats for " + message.author.username)
