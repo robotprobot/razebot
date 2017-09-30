@@ -15,6 +15,8 @@ const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
 const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
+var broadcastingSound = false;
+var tournamentVoiceChannel = config.tournamentStartRoomID;
 
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
@@ -76,10 +78,16 @@ client.on("message", message => {
   }
 });
 
-client.on("voiceJoin", voiceChannel, user => { // When someone joins a voice room
+client.on("voiceJoin", config.tournamentStartRoomID, user => { // When someone joins a voice room
   if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
-  /* After this line, we will begin the tournament prep phase. */
-  
+  if (broadcastingSound == true) return; // If voice room is not the designated room, reject
+  /* After this line, we will begin the tournament join phase. */
+  broadcastingSound = true;
+  tournamentVoiceChannel.join().then(connection =>
+    {
+      const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
+   }).catch(err => console.log(err));
+   broadcastingSound = false;
 });
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
