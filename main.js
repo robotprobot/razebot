@@ -16,7 +16,7 @@ const client = new Discord.Client(); // Prepare a client for the bot
 const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
 var broadcastingSound = false;
-var tournamentVoiceChannel = config.tournamentStartRoomID;
+const tournamentVoiceChannel = config.tournamentStartRoomID;
 
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
@@ -78,7 +78,7 @@ client.on("message", message => {
   }
 });
 
-client.on("voiceJoin", voicechannel, user => { // When someone joins a voice room
+client.on("voiceJoin", tournamentVoiceChannel, user => { // When someone joins a voice room
   if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
   if (broadcastingSound == true) return; // If voice room is not the designated room, reject
   /* After this line, we will begin the tournament join phase. */
