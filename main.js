@@ -78,7 +78,7 @@ client.on("message", message => {
   }
 });
 
-client.on("voiceJoin", tournamentVoiceChannel, user => { // When someone joins a voice room
+client.on("voiceJoin", voicechannel, user => { // When someone joins a voice room
   if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
   if (broadcastingSound == true) return; // If voice room is not the designated room, reject
   /* After this line, we will begin the tournament join phase. */
