@@ -15,7 +15,7 @@ const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
 const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
-var unrecognisedCommands = 0; // Keep track of how many unrecognised commands were used
+const unrecognisedCommands = 0; // Keep track of how many unrecognised commands were used
 
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 

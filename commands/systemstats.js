@@ -7,5 +7,4 @@ const config = require("../config.json"); // Require access to the config.json
 exports.run = (client, message, args) => {
   message.channel.send("Amount of unrecognised commands used: " + main.unrecognisedCommands);
 
-
 }; // Go back to main.js
