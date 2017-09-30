@@ -63,11 +63,10 @@ client.on("voiceJoin", user => { // When someone joins a voice room
   //if (broadcastingSound == true) return; // If already broadcasting, wait
   /* After this line, we will begin the tournament join phase. */
   broadcastingSound = true;
-  tournamentVoiceChannel.join().then(connection =>
-    {
-      const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
-   }).catch(err => console.log(err));
-   broadcastingSound = false;
+  joinVoiceChannel(config.tournamentStartRoomID, function() {
+    connection.playFile('./soundfiles/aplayerjoined.mp3');
+  });
+  broadcastingSound = false;
 });
 
 client.on("message", message => {
