@@ -58,6 +58,18 @@ fs.readdir("./commands/", (err, files) => { // Read the commands folder and prep
   });
 });
 
+client.on("voiceJoin", user => { // When someone joins a voice room
+  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
+  //if (broadcastingSound == true) return; // If already broadcasting, wait
+  /* After this line, we will begin the tournament join phase. */
+  broadcastingSound = true;
+  tournamentVoiceChannel.join().then(connection =>
+    {
+      const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
+   }).catch(err => console.log(err));
+   broadcastingSound = false;
+});
+
 client.on("message", message => {
   if (!message.guild) return; // If message is not in server (like a dm), reject
   if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
@@ -76,18 +88,6 @@ client.on("message", message => {
     message.channel.send("Command not recognised");
     console.log("Informed user command is unrecognised.");
   }
-});
-
-client.on("voiceJoin", user => { // When someone joins a voice room
-  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
-  //if (broadcastingSound == true) return; // If already broadcasting, wait
-  /* After this line, we will begin the tournament join phase. */
-  broadcastingSound = true;
-  tournamentVoiceChannel.join().then(connection =>
-    {
-      const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
-   }).catch(err => console.log(err));
-   broadcastingSound = false;
 });
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
