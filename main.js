@@ -18,6 +18,14 @@ const fs = require("fs"); // Prepare file reading
 
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
+/* THIS SEGMENT CAPTURES ERRORS AND CREATES A DUMP FILE.
+   THIS WILL HOPEFULLY PREVENT FULL ON CRASHES AND THE BOT MAY BE ABLE TO RECOVER.*/
+client.on("error", (e) => console.error(e));
+client.on("warn", (e) => console.warn(e));
+client.on("debug", (e) => console.info(e));
+/* END OF ERROR AND DUMPING SEGMENT.
+   BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.*/
+
 client.on("ready", () => {
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
@@ -28,6 +36,7 @@ client.on("ready", () => {
   console.log(""); // Spacing
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
+  client.user.setGame('on V1.0.0. Ready!');
 });
 
 client.on("guildCreate", guild => { // Notes in console when bot has joined a server
@@ -65,6 +74,12 @@ client.on("message", message => {
     message.channel.send("Command not recognised");
     console.log("Informed user command is unrecognised.");
   }
+});
+
+client.on("voiceJoin", voiceChannel, user => { // When someone joins a voice room
+  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
+  /* After this line, we will begin the tournament prep phase. */
+  
 });
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
