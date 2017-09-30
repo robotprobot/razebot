@@ -14,6 +14,6 @@ exports.run = (client, message, args) => {
     .addField("Points", userFile.points, true) // Fill in the areas with the correct numbers
     .addField("Wins", userFile.wins, true)
     .addField("Losses", userFile.losses, true)
-    .addField("Level", userFile.level, true)
+    .addField("Level", userFile.level, true);
     message.channel.send({embed}); // Send embed
-} // Go back to main.js
+}; // Go back to main.js

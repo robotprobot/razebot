@@ -68,7 +68,7 @@ client.on("message", message => {
 });
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
-  var unformatteduserid = `${member}` // Take the original UserID
+  var unformatteduserid = `${member}`; // Take the original UserID
   var newuserid = unformatteduserid.replace(/\D/g,''); // Remove any characters that are not numbers
   var playerData = `./stats/${newuserid}.json`; // Tells system to use the formatted UserID as filename
   if (!fs.existsSync(playerData)) { // If the file does not already exist (i.e a brand new user), generate file
