@@ -15,6 +15,7 @@ const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
 const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
+var unrecognisedCommands = 0; // Keep track of how many unrecognised commands were used
 
 client.login(config.token); // Connect to the Discord service and provide bots identity to server
 
@@ -62,6 +63,7 @@ client.on("message", message => {
     console.error(err);
     console.log("Unrecognised command entered with a prefix.");
     console.log("Command was: " + command);
+    unrecognisedCommands = unrecognisedCommands + 1;
     message.channel.send("Command not recognised");
     console.log("Informed user command is unrecognised.");
   }
