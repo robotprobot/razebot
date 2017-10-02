@@ -3,8 +3,14 @@
 
 Razebot is my basic framework for a new bot idea that I am working on.
 
-Please note that attempting to compile and run the bot will result in failure as config.json is not included.
-This config contains a OAUTH token and owner ID's, therefore cannot be uploaded.
-
 This is built with NodeJS and the Discord.js library.
 The primary language is JavaScript.
+
+#### *Branch guide:*
+> Master - Main branch that works for other users.   
+>Beta - Secondary branch that only works for this programs devs.
+
+#### *This project uses (and you require a copy of these for the program to work!)...*
+* Discord.js
+  > Discord.js is a library that connects to Discord and allows API access.   
+  > It is developed by 'hydrabolt' and is available at https://github.com/hydrabolt/discord.js or on their website: https://discord.js.org/
