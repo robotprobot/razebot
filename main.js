@@ -57,8 +57,8 @@ fs.readdir("./commands/", (err, files) => { // Read the commands folder and prep
   });
 });
 
-client.on("voiceJoin", function(user,channel) { // When someone joins a voice room
-  if (!channel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
+client.on("voiceJoin", function(user, voiceChannel) { // When someone joins a voice room
+  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
   if (broadcastingSound == true) return; // If already broadcasting, wait
   /* After this line, we will begin the tournament join phase. */
   broadcastingSound = true;
