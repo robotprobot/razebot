@@ -27,6 +27,20 @@ client.on("debug", (e) => console.info(e));
 /* END OF ERROR AND DUMPING SEGMENT.
    BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.*/
 
+client.on("voiceSwitch", function(user, voiceChannel) { // When someone joins a voice room
+  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
+  if (broadcastingSound == true) return; // If already broadcasting, wait
+  /* After this line, we will begin the tournament join phase. */
+  broadcastingSound = true;
+  let mainChannel = client.channels.get(config.tournamentStartRoomID);
+  mainChannel.join()
+   .then(connection => { // Connection is an instance of VoiceConnection
+    const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
+   broadcastingSound = false;
+   })
+   .catch(console.log);
+});
+
 client.on("ready", () => {
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
@@ -55,20 +69,6 @@ fs.readdir("./commands/", (err, files) => { // Read the commands folder and prep
     let eventName = file.split(".")[0];
     client.on(eventName, (...args) => eventFunction.run(client, ...args));
   });
-});
-
-client.on("voiceSwitch", function(user, voiceChannel) { // When someone joins a voice room
-  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
-  if (broadcastingSound == true) return; // If already broadcasting, wait
-  /* After this line, we will begin the tournament join phase. */
-  broadcastingSound = true;
-  let mainChannel = client.channels.get(config.tournamentStartRoomID);
-  mainChannel.join()
-    .then(connection => { // Connection is an instance of VoiceConnection
-    const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
-    broadcastingSound = false;
-    })
-    .catch(console.log);
 });
 
 client.on("message", message => {
