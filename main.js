@@ -21,9 +21,9 @@ client.login(config.token); // Connect to the Discord service and provide bots i
 
 /* THIS SEGMENT CAPTURES ERRORS AND CREATES A DUMP FILE.
    THIS WILL HOPEFULLY PREVENT FULL ON CRASHES AND THE BOT MAY BE ABLE TO RECOVER.*/
-//client.on("error", (e) => console.error(e));
-//client.on("warn", (e) => console.warn(e));
-//client.on("debug", (e) => console.info(e));
+client.on("error", (e) => console.error(e));
+client.on("warn", (e) => console.warn(e));
+client.on("debug", (e) => console.info(e));
 /* END OF ERROR AND DUMPING SEGMENT.
    BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.*/
 
@@ -62,7 +62,8 @@ client.on("voiceJoin", user => { // When someone joins a voice room
   //if (broadcastingSound == true) return; // If already broadcasting, wait
   /* After this line, we will begin the tournament join phase. */
   broadcastingSound = true;
-  config.tournamentStartRoomID.join()
+  let channel = client.channels.get(config.tournamentStartRoomID);
+  channel.join()
         .then(connection => { // Connection is an instance of VoiceConnection
           const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
         })

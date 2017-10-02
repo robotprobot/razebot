@@ -13,7 +13,7 @@ exports.run = (client, message, args) => {
   //  file.level = +1; // Increase level by 1 (which is 25 points)
   //  fs.writeFile(file, function (err) {
   //    if (err) {
-  //      console.log("An error occured when force levelling up. Likely could not change file.");
+  //      console.log("An error occured when force levelling up. Likely could not update file.");
   //      message.channel.send("An error has occured. See console for details.");
   //      return;
   //    }
