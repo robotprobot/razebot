@@ -2,7 +2,7 @@
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
 const config = require("../config.json"); // Require access to the config.json
-const fs = require("fs"); // Require the ability to read and write with the filesystem
+const fs = require("fs"); // Allow filesystem read and write
 
 exports.run = (client, message, args) => {
   var userID = message.author.id; // Get userID
@@ -15,6 +15,6 @@ exports.run = (client, message, args) => {
     .addField("Points", userFile.points, true) // Fill in the areas with the correct numbers
     .addField("Wins", userFile.wins, true)
     .addField("Losses", userFile.losses, true)
-    .addField("Level", userFile.level, true)
+    .addField("Level", userFile.level, true);
     message.channel.send({embed}); // Send embed
-} // Go back to main.js
+}; // Go back to main.js
