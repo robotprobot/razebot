@@ -17,7 +17,7 @@ const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
 var broadcastingSound = false;
 
-client.login(config.token); // Connect to the Discord service and provide bots identity to server
+client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
 /* THIS SEGMENT CAPTURES ERRORS AND CREATES A DUMP FILE.
    THIS WILL HOPEFULLY PREVENT FULL ON CRASHES AND THE BOT MAY BE ABLE TO RECOVER.*/
@@ -27,21 +27,7 @@ client.on("debug", (e) => console.info(e));
 /* END OF ERROR AND DUMPING SEGMENT.
    BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.*/
 
-client.on("voiceSwitch", function(user, voiceChannel) { // When someone joins a voice room
-  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
-  if (broadcastingSound == true) return; // If already broadcasting, wait
-  /* After this line, we will begin the tournament join phase. */
-  broadcastingSound = true;
-  let mainChannel = client.channels.get(config.tournamentStartRoomID);
-  mainChannel.join()
-   .then(connection => { // Connection is an instance of VoiceConnection
-    const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
-   broadcastingSound = false;
-   })
-   .catch(console.log);
-});
-
-client.on("ready", () => {
+client.on("ready", () => { // Once bot has connected and initialised, do this part
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log("V1.0.0");
@@ -54,14 +40,6 @@ client.on("ready", () => {
   client.user.setGame('on V1.0.0. Ready!');
 });
 
-client.on("guildCreate", guild => { // Notes in console when bot has joined a server
-  console.log(`Joined server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-});
-
-client.on("guildDelete", guild => { // Notes in console when bot has left or been removed from a server
-  console.log(`Disconnected/removed from: ${guild.name} (id: ${guild.id})`);
-});
-
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
   files.forEach(file => { // Prepare each file
@@ -71,24 +49,12 @@ fs.readdir("./commands/", (err, files) => { // Read the commands folder and prep
   });
 });
 
-client.on("message", message => {
-  if (!message.guild) return; // If message is not in server (like a dm), reject
-  if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
-  if (!message.content.startsWith(config.prefix)) return; // If the message does not contain the prefix, reject
+client.on("guildCreate", guild => { // Notes in console when bot has joined a server
+  console.log(`Joined server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
+});
 
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g); // If message accepted, remove prefix
-  const command = args.shift().toLowerCase(); // Change resulting message to lowercase
-
-  try {
-    let commandFile = require(`./commands/${command}.js`); // Search for a corrosponding command
-    commandFile.run(client, message, args); // If command exists, run it
-  } catch (err) { // Else tell user that command was not found
-    console.error(err);
-    console.log("Unrecognised command entered with a prefix.");
-    console.log("Command was: " + command);
-    message.channel.send("Command not recognised");
-    console.log("Informed user command is unrecognised.");
-  }
+client.on("guildDelete", guild => { // Notes in console when bot has left or been removed from a server
+  console.log(`Disconnected/removed from: ${guild.name} (id: ${guild.id})`);
 });
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
@@ -109,4 +75,38 @@ client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a j
       stream.end(); // Close the file and save
     });
   };
+});
+
+client.on("voiceJoin", function(user, voiceChannel) { // When someone joins a voice room
+  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
+  if (broadcastingSound == true) return; // If already broadcasting, wait
+  /* After this line, we will begin the tournament join phase. */
+  broadcastingSound = true; // Make it so that it cannot broadcast over a playing mp3
+  let mainChannel = client.channels.get(config.tournamentStartRoomID); // Prepare the designated channels ID
+  mainChannel.join() // Join the designated channel
+   .then(connection => { // Connection is an instance of VoiceConnection - Begin a instance
+    const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3'); // Play the mp3
+   broadcastingSound = false; // Make it so that it can broadcast another mp3 because the previous one stopped
+   })
+   .catch(console.log); // Catch errors and write to console
+});
+
+client.on("message", message => { // Read messages and run the correct command if possible
+  if (!message.guild) return; // If message is not in server (like a dm), reject
+  if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
+  if (!message.content.startsWith(config.prefix)) return; // If the message does not contain the prefix, reject
+
+  const args = message.content.slice(config.prefix.length).trim().split(/ +/g); // If message accepted, remove prefix
+  const command = args.shift().toLowerCase(); // Change resulting message to lowercase
+
+  try {
+    let commandFile = require(`./commands/${command}.js`); // Search for a corrosponding command
+    commandFile.run(client, message, args); // If command exists, run it
+  } catch (err) { // Else tell user that command was not found
+    console.error(err);
+    console.log("Unrecognised command entered with a prefix.");
+    console.log("Command was: " + command);
+    message.channel.send("Command not recognised");
+    console.log("Informed user command is unrecognised.");
+  }
 });
