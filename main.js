@@ -57,13 +57,13 @@ fs.readdir("./commands/", (err, files) => { // Read the commands folder and prep
   });
 });
 
-client.on("voiceJoin", user => { // When someone joins a voice room
-  //if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
-  //if (broadcastingSound == true) return; // If already broadcasting, wait
+client.on("voiceJoin", function(user,channel) { // When someone joins a voice room
+  if (!channel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
+  if (broadcastingSound == true) return; // If already broadcasting, wait
   /* After this line, we will begin the tournament join phase. */
   broadcastingSound = true;
-  let channel = client.channels.get(config.tournamentStartRoomID);
-  channel.join()
+  let mainChannel = client.channels.get(config.tournamentStartRoomID);
+  mainChannel.join()
         .then(connection => { // Connection is an instance of VoiceConnection
           const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3');
         })
