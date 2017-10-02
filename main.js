@@ -1,13 +1,14 @@
-// BOT FRAMEWORK FOR A DISCORD SERVER - CODENAME RAZEBOT
-// USING DISCORD.JS LIBRARIES AND THE OFFICIAL DISCORD API
-// CREATED 24/09/2017
-// MADE BY STEVEN WHEELER (robotprobot#8211)
+/* BOT FRAMEWORK FOR A DISCORD SERVER - CODENAME RAZEBOT
+   USING DISCORD.JS LIBRARIES AND THE OFFICIAL DISCORD API
+   CREATED 24/09/2017
+   MADE BY STEVEN WHEELER (robotprobot#8211)
 
-// main.js is the main file for the bot
-// included should be a commands folder, and a config.json.
+   main.js is the main file for the bot
+   included should be a commands folder, and a config.json.
 
-// Bot is partially modifiable and can be changed via config.json.
-// (Do not change the token in config.json. This will break the connection to Discord!)
+   Bot is partially modifiable and can be changed via config.json.
+   (Do not change the token in config.json. This will break the connection to Discord!)
+*/
 
 // <<<--- Code starts past this line! --->>>
 
@@ -20,12 +21,14 @@ var broadcastingSound = false;
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
 /* THIS SEGMENT CAPTURES ERRORS AND CREATES A DUMP FILE.
-   THIS WILL HOPEFULLY PREVENT FULL ON CRASHES AND THE BOT MAY BE ABLE TO RECOVER.*/
+   THIS WILL HOPEFULLY PREVENT FULL ON CRASHES AND THE BOT MAY BE ABLE TO RECOVER.
+*/
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 client.on("debug", (e) => console.info(e));
 /* END OF ERROR AND DUMPING SEGMENT.
-   BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.*/
+   BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.
+*/
 
 client.on("ready", () => { // Once bot has connected and initialised, do this part
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
