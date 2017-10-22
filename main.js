@@ -16,7 +16,6 @@ const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
 const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
-var broadcastingSound = false;
 
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
@@ -25,15 +24,17 @@ client.login(config.loginToken); // Connect to the Discord service and provide b
 */
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
-client.on("debug", (e) => console.info(e));
+//client.on("debug", (e) => console.info(e));
 /* END OF ERROR AND DUMPING SEGMENT.
    BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.
 */
 
 client.on("ready", () => { // Once bot has connected and initialised, do this part
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
+  console.log(""); // Spacing
   console.log(config.botName + " online and ready!");
-  console.log("V1.0.0");
+  console.log(""); // Spacing
+  console.log('"RazeBot Discord Bot Framework System" - V1.0.0');
   console.log("Developed by robotprobot (Steven Wheeler)");
   console.log("DISCORD: robotprobot#8211");
   console.log("TWITTER: @robot_probot");
@@ -41,6 +42,24 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
   client.user.setGame('on V1.0.0. Ready!');
+
+  /* CHECK IF DIRECTORIES EXIST ON BOOT */
+  // SOUNDFILES DIRECTORY
+  if (!fs.existsSync('./soundfiles/')) {
+    console.log("Soundfiles folder was not found, install is likely corrupt, please reinstall.");
+    process.exit(-1);
+  }
+  // COMMANDS DIRECTORY
+  if (!fs.existsSync('./commands/')) {
+    console.log("Commands folder was not found, install is likely corrupt, please reinstall.");
+    process.exit(-1);
+  }
+  // STATS DIRECTORY
+  if (!fs.existsSync('./stats/')) {
+    console.log("Stats folder was not found, generating...");
+    fs.mkdirSync('./stats/');
+  }
+
 });
 
 fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
@@ -74,22 +93,18 @@ client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a j
       stream.write(' "wins": 0,\n');
       stream.write(' "losses": 0,\n');
       stream.write(' "level": 0\n');
-      stream.write('}\n'); // Finish the basic template
+      stream.write('}'); // Finish the basic template
       stream.end(); // Close the file and save
     });
   };
 });
 
 client.on("voiceJoin", function(user, voiceChannel) { // When someone joins a voice room
-  if (!voiceChannel == config.tournamentStartRoomID) return; // If voice room is not the designated room, reject
-  if (broadcastingSound == true) return; // If already broadcasting, wait
-  /* After this line, we will begin the tournament join phase. */
-  broadcastingSound = true; // Make it so that it cannot broadcast over a playing mp3
-  let mainChannel = client.channels.get(config.tournamentStartRoomID); // Prepare the designated channels ID
+  if (!voiceChannel == config.tournamentJoinRoomID) return; // If voice room is not the designated room, reject
+  const mainChannel = client.channels.get(config.tournamentJoinRoomID); // Prepare the designated channels ID
   mainChannel.join() // Join the designated channel
    .then(connection => { // Connection is an instance of VoiceConnection - Begin a instance
     const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3'); // Play the mp3
-   broadcastingSound = false; // Make it so that it can broadcast another mp3 because the previous one stopped
    })
    .catch(console.log); // Catch errors and write to console
 });
