@@ -8,8 +8,8 @@ The primary language is JavaScript.
 
 #### *Branch guide:*
 > Master - Main branch that works for other users.   
-> Beta - Secondary branch that only works for this programs devs.
-> Webinterface - A third experimental branch for a web interface.
+> Beta - Secondary branch that only works for this programs devs.   
+> Webinterface - A third experimental branch for a web interface.   
 
 #### *This project uses (and you require a copy of these for the program to work!)...*
 * Discord.js
