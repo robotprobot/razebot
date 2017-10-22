@@ -16,6 +16,7 @@ const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
 const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
+const version = "1.0.0";
 
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
@@ -34,14 +35,14 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log(""); // Spacing
   console.log(config.botName + " online and ready!");
   console.log(""); // Spacing
-  console.log('"RazeBot Discord Bot Framework System" - V1.0.0');
+  console.log('"RazeBot Discord Bot Framework System" - ' + version);
   console.log("Developed by robotprobot (Steven Wheeler)");
   console.log("DISCORD: robotprobot#8211");
   console.log("TWITTER: @robot_probot");
   console.log(""); // Spacing
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
-  client.user.setGame('on V1.0.0. Ready!');
+  client.user.setGame('on ' + version + '. Ready!');
 
   /* CHECK IF DIRECTORIES EXIST ON BOOT */
   // SOUNDFILES DIRECTORY
@@ -59,15 +60,29 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
     console.log("Stats folder was not found, generating...");
     fs.mkdirSync('./stats/');
   }
+  // LOGS FILE
+  if (!fs.existsSync('./log.txt')) {
+    console.log("Log file was not found, generating...");
+    var stream = fs.createWriteStream('./log.txt');
+    stream.once('open', function(fd) { // Open the file to write to it
+      stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC).");
+      stream.end(); // Close the file and save
+    });
 
-});
-
-fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
+  fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
-  files.forEach(file => { // Prepare each file
-    let eventFunction = require(`./commands/${file}`);
-    let eventName = file.split(".")[0];
-    client.on(eventName, (...args) => eventFunction.run(client, ...args));
+    files.forEach(file => { // Prepare each file
+      let eventFunction = require(`./commands/${file}`);
+      let eventName = file.split(".")[0];
+      client.on(eventName, (...args) => eventFunction.run(client, ...args));
+    });
+  });
+};
+
+setTimeout(function() { // Bot boot logger
+  fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - [STARTUP] - " + "Bot booted successfully.", function (err) { // Log successful bot boot
+     if (err) return console.log(err);
+   }, 500);
   });
 });
 
@@ -120,11 +135,16 @@ client.on("message", message => { // Read messages and run the correct command i
   try {
     let commandFile = require(`./commands/${command}.js`); // Search for a corrosponding command
     commandFile.run(client, message, args); // If command exists, run it
+    console.log('Command "' + command + '" was used successfully by ' + message.author.username + '. (ID: ' + message.author.id + ')');
+    fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - [COMMAND] - " + 'Command "' + command + '" was used successfully by ' + message.author.username + '. (ID: ' + message.author.id + ')', function (err) {
+       if (err) return console.log(err);
+    });
   } catch (err) { // Else tell user that command was not found
-    console.error(err);
-    console.log("Unrecognised command entered with a prefix.");
-    console.log("Command was: " + command);
+    //console.error(err);
+    console.log('Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
     message.channel.send("Command not recognised");
-    console.log("Informed user command is unrecognised.");
+    fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - [COMMAND] - " + 'Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')', function (err) {
+       if (err) return console.log(err);
+    });
   }
 });
