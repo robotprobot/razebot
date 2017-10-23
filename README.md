@@ -15,6 +15,6 @@ The primary language is JavaScript.
 * Discord.js
   > Discord.js is a library that connects to Discord and allows API access.   
   > It is developed by 'hydrabolt' and is available at https://github.com/hydrabolt/discord.js or on their website: https://discord.js.org/
- * sqlite
+* sqlite
   > Sqlite is required for the stats tracking system, as it uses a SQL database.
   > It is installable by the following command: npm install sqlite --save
