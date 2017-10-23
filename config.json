@@ -3,5 +3,9 @@
   "botName": "",
   "prefix": "",
   "ownerID": "",
-  "tournamentStartRoomID": ""
+  "tournamentStartRoomID": "",
+  
+  "loggingStartup": "TRUE",
+  "loggingCommand": "TRUE",
+  "loggingPerms": "TRUE"
 }
