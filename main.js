@@ -14,10 +14,12 @@
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
-const config = require("./config.json"); // Require the config file for the bot
 const fs = require("fs"); // Prepare file reading
+const config = require("./config.json"); // Require the config file for the bot
+const sql = require("sqlite"); // SQL Database, requires the sqlite module
 const mainVersion = "1.0.0";
 const statstrackVersion = "1.1.0";
+
 
 // <<<--- Code starts past this line! --->>>
 
@@ -52,24 +54,30 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
 
   if (config.loggingEnabled !== "TRUE") { // Alert about logging disabled
     console.log("Logging is disabled in config.json! No logging will occur.");
-  }
+  };
 
   /* CHECK IF DIRECTORIES EXIST ON BOOT */
   // SOUNDFILES DIRECTORY
   if (!fs.existsSync('./soundfiles/')) {
     console.log("Soundfiles folder was not found, install is likely corrupt, please reinstall.");
     process.exit(-1);
-  }
+  };
   // COMMANDS DIRECTORY
   if (!fs.existsSync('./commands/')) {
     console.log("Commands folder was not found, install is likely corrupt, please reinstall.");
     process.exit(-1);
+  };
+  // STATS DATABASE
+  if (!fs.existsSync('./stats.sqlite')) {
+    console.log("Stats database was not found, generating...");
+    sql.open("./stats.sqlite"); // Create the database
+    setTimeout(function() {
+      sql.run("CREATE TABLE IF NOT EXISTS stats (userId TEXT, points INTEGER, wins INTEGER, losses INTEGER, level INTEGER)"); // Create table
+    }, 500);
   }
-  // STATS DIRECTORY
-  if (!fs.existsSync('./stats/')) {
-    console.log("Stats folder was not found, generating...");
-    fs.mkdirSync('./stats/');
-  }
+  else {
+    sql.open("./stats.sqlite"); // Open the database
+  };
   // LOGS FILE
   if (!fs.existsSync('./log.txt') && config.loggingEnabled == "TRUE") {
     console.log("Log file was not found, generating...");
@@ -79,7 +87,7 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
       stream.end(); // Close the file and save
  });
 
-  fs.readdir("./commands/", (err, files) => { // Read the commands folder and prepare commands for use
+  fs.readdir("../commands", (err, files) => { // Read the commands folder and prepare commands for use
   if (err) return console.error(err); // If reading fails, write to console and abort
     files.forEach(file => { // Prepare each file
       let eventFunction = require(`./commands/${file}`);
@@ -111,23 +119,13 @@ client.on("guildDelete", guild => { // Notes in console when bot has left or bee
 });
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
-  var unformatteduserid = `${member}`; // Take the original UserID
-  var newuserid = unformatteduserid.replace(/\D/g,''); // Remove any characters that are not numbers
-  var playerData = `./stats/${newuserid}.json`; // Tells system to use the formatted UserID as filename
-  if (!fs.existsSync(playerData)) { // If the file does not already exist (i.e a brand new user), generate file
-    console.log("New client detected. Generating stats file."); // Alert in console that this has happened
-    var stream = fs.createWriteStream(playerData); // Create the file and prepare it
-    stream.once('open', function(fd) { // Open the file to write to it
-      stream.write('{\n'); // Write the basic template
-      stream.write(' "userid": ' + newuserid + ',\n'); // Include the UserID in file for reading later
-      stream.write(' "points": 0,\n');
-      stream.write(' "wins": 0,\n');
-      stream.write(' "losses": 0,\n');
-      stream.write(' "level": 0\n');
-      stream.write('}'); // Finish the basic template
-      stream.end(); // Close the file and save
-    });
-  };
+    sql.get(`SELECT * FROM stats WHERE userId = "${member.id}"`).then(row => {
+      if (!row) {
+        console.log("New client detected. Adding entry to database...");
+        sql.run("INSERT INTO stats (userId, points, wins, losses, level) VALUES (?, ?, ?, ?, ?)", [member.id, 0, 0, 0, 0]);
+      }
+    }).catch(() => {
+  });
 });
 
 client.on("message", message => { // Read messages and run the correct command if possible
@@ -147,7 +145,7 @@ client.on("message", message => { // Read messages and run the correct command i
     };
     return;
   } catch (err) { // Else tell user that command was not found
-    //console.error(err);
+    console.error(err); // IF THERE IS A FAILURE, THIS WILL DUMP IT TO CONSOLE!
     console.log('Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
     message.channel.send("Command not recognised");
     if (config.loggingEnabled == "TRUE" && config.loggingCommand == "TRUE") {
