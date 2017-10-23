@@ -65,7 +65,7 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
     console.log("Log file was not found, generating...");
     var stream = fs.createWriteStream('./log.txt');
     stream.once('open', function(fd) { // Open the file to write to it
-      stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC).");
+      stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged in config.json");
       stream.end(); // Close the file and save
     });
 
@@ -80,10 +80,10 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
 };
 
 setTimeout(function() { // Bot boot logger
-  fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - [STARTUP] - " + "Bot booted successfully.", function (err) { // Log successful bot boot
-     if (err) return console.log(err);
-   }, 500);
-  });
+  if (config.loggingStartup == "TRUE") {
+  fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
+    }
+  }, 500);
 });
 
 client.on("guildCreate", guild => { // Notes in console when bot has joined a server
@@ -135,16 +135,18 @@ client.on("message", message => { // Read messages and run the correct command i
   try {
     let commandFile = require(`./commands/${command}.js`); // Search for a corrosponding command
     commandFile.run(client, message, args); // If command exists, run it
-    console.log('Command "' + command + '" was used successfully by ' + message.author.username + '. (ID: ' + message.author.id + ')');
-    fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - [COMMAND] - " + 'Command "' + command + '" was used successfully by ' + message.author.username + '. (ID: ' + message.author.id + ')', function (err) {
-       if (err) return console.log(err);
-    });
+    console.log('Command "' + command + '" was found successfully and used by ' + message.author.username + '. (ID: ' + message.author.id + ')');
+    if (config.loggingCommand == "TRUE") {
+      fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [COMMAND] - " + 'Command "' + command + '" was found successfully and used by ' + message.author.username + '. (ID: ' + message.author.id + ')');
+    }
+    return;
   } catch (err) { // Else tell user that command was not found
     //console.error(err);
     console.log('Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
     message.channel.send("Command not recognised");
-    fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - [COMMAND] - " + 'Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')', function (err) {
-       if (err) return console.log(err);
-    });
+    if (config.loggingCommand == "TRUE") {
+      fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [COMMAND] - " + 'Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
+    }
+    return;
   }
 });
