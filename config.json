@@ -5,7 +5,9 @@
   "ownerID": "",
   "tournamentStartRoomID": "",
   
+  "loggingEnabled": "TRUE",
   "loggingStartup": "TRUE",
   "loggingCommand": "TRUE",
-  "loggingPerms": "TRUE"
+  "loggingPerms": "TRUE",
+  "loggingConnect": "TRUE"
 }
