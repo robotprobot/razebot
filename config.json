@@ -10,4 +10,6 @@
   "loggingCommand": "TRUE",
   "loggingPerms": "TRUE",
   "loggingConnect": "TRUE"
+  
+  "consoleDebuggingEnabled": "FALSE"
 }
