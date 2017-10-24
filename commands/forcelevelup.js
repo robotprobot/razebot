@@ -21,7 +21,6 @@ exports.run = (client, message, args) => {
 
   else if (userID == config.ownerID && (!config.loggingEnabled == "TRUE" || !config.loggingPerms == "TRUE")) { // If user is owner and logging is disabled
     sql.get(`SELECT * FROM stats WHERE userId ="${message.author.id}"`).then(row => {
-      sql.open("./stats.sqlite");
       sql.run(`UPDATE stats SET points = ${row.points + 25} WHERE userId = ${message.author.id}`);
       sql.run(`UPDATE stats SET level = ${row.level + 1} WHERE userId = ${message.author.id}`);
      }).catch(() => {
@@ -36,7 +35,6 @@ exports.run = (client, message, args) => {
 
   else if (userID == config.ownerID && config.loggingEnabled == "TRUE" && config.loggingPerms == "TRUE") { // if user is owner and logging is enabled
     sql.get(`SELECT * FROM stats WHERE userId ="${message.author.id}"`).then(row => {
-      sql.open("./stats.sqlite");
       sql.run(`UPDATE stats SET points = ${row.points + 25} WHERE userId = ${message.author.id}`);
       sql.run(`UPDATE stats SET level = ${row.level + 1} WHERE userId = ${message.author.id}`);
      }).catch(() => {
