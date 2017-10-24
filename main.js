@@ -21,7 +21,6 @@ const mainVersion = "1.0.1";
 const statstrackVersion = "1.1.1";
 const debuggingEnabled = "FALSE";
 
-
 // <<<--- Code starts past this line! --->>>
 
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
