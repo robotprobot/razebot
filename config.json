@@ -9,7 +9,7 @@
   "loggingStartup": "TRUE",
   "loggingCommand": "TRUE",
   "loggingPerms": "TRUE",
-  "loggingConnect": "TRUE"
+  "loggingConnect": "TRUE",
   
   "consoleDebuggingEnabled": "FALSE"
 }
