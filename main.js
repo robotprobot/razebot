@@ -85,15 +85,6 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
       stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
       stream.end(); // Close the file and save
  });
-
-  fs.readdir("../commands", (err, files) => { // Read the commands folder and prepare commands for use
-  if (err) return console.error(err); // If reading fails, write to console and abort
-    files.forEach(file => { // Prepare each file
-      let eventFunction = require(`./commands/${file}`);
-      let eventName = file.split(".")[0];
-      client.on(eventName, (...args) => eventFunction.run(client, ...args));
-    });
-  });
 };
 
 setTimeout(function() { // Bot boot logger
