@@ -28,7 +28,6 @@ exports.run = (client, message, args) => {
      setTimeout(function() {
       console.log("Force level up was used and completed successfully.");
       message.channel.send("Force level up complete.");
-      fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [FRCELVL] - " + 'Force level up was completed on user: ' + message.author.username + '. (ID: ' + message.author.id + ')');
       }, 1000);
       return;
   }

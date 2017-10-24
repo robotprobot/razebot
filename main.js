@@ -14,6 +14,7 @@
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client(); // Prepare a client for the bot
+const talkedRecently = new Set();
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
@@ -49,7 +50,7 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log(""); // Spacing
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
-  client.user.setGame('on ' + mainVersion + '. Ready!');
+  client.user.setGame('on ' + mainVersion + '. "' + config.prefix + ' help"');
 
   if (config.loggingEnabled !== "TRUE") { // Alert about logging disabled
     console.log("Logging is disabled in config.json! No logging will occur.");
@@ -85,6 +86,8 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
       stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
       stream.end(); // Close the file and save
  });
+
+
 };
 
 setTimeout(function() { // Bot boot logger
@@ -122,6 +125,18 @@ client.on("message", message => { // Read messages and run the correct command i
   if (!message.guild) return; // If message is not in server (like a dm), reject
   if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
   if (!message.content.startsWith(config.prefix)) return; // If the message does not contain the prefix, reject
+  if (talkedRecently.has(message.author.id)) {
+    message.reply("you are currently on cooldown for 2.5 seconds! Please wait before sending another command.");
+    return;
+  };
+
+  // Adds the user to the set so that they can't talk for 2.5 seconds
+  talkedRecently.add(message.author.id);
+  console.log(message.author.username + " (ID: " + message.author.id + ") is now on cooldown for 2.5 seconds.");
+  setTimeout(() => {
+  // Removes the user from the set after 2.5 seconds
+  talkedRecently.delete(message.author.id);
+  }, 2500);
 
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g); // If message accepted, remove prefix
   const command = args.shift().toLowerCase(); // Change resulting message to lowercase
