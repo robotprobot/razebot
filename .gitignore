@@ -4,3 +4,4 @@ notes.txt
 .eslintrc
 stats
 log.txt
+stats.sqlite

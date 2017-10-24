@@ -15,34 +15,34 @@ exports.run = (client, message, args) => {
 
   else if (userID !== config.ownerID && config.loggingEnabled == "TRUE" && config.loggingPerms == "TRUE") { // If user is not owner AND logging is enabled
     message.channel.send("Insufficient permissions -- this incident has been logged.");
-    fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [ PERMS ] - " + '~INSUFFICIENT PERMISSIONS~ Someone attempted to force level up without correct perms! User: ' + message.author.username + '. (ID: ' + message.author.id + ')');
+    fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [ PERMS ] - " + '~INSUFFICIENT PERMISSIONS~ Someone attempted to force level down without correct perms! User: ' + message.author.username + '. (ID: ' + message.author.id + ')');
     return;
   }
 
   else if (userID == config.ownerID && (!config.loggingEnabled == "TRUE" || !config.loggingPerms == "TRUE")) { // If user is owner and logging is disabled
     sql.get(`SELECT * FROM stats WHERE userId ="${message.author.id}"`).then(row => {
-      sql.run(`UPDATE stats SET points = ${row.points + 25} WHERE userId = ${message.author.id}`);
-      sql.run(`UPDATE stats SET level = ${row.level + 1} WHERE userId = ${message.author.id}`);
+      sql.run(`UPDATE stats SET points = ${row.points - 25} WHERE userId = ${message.author.id}`);
+      sql.run(`UPDATE stats SET level = ${row.level - 1} WHERE userId = ${message.author.id}`);
      }).catch(() => {
      });
      setTimeout(function() {
-      console.log("Force level up was used and completed successfully.");
-      message.channel.send("Force level up complete.");
-      fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [FRCELVL] - " + 'Force level up was completed on user: ' + message.author.username + '. (ID: ' + message.author.id + ')');
+      console.log("Force level down was used and completed successfully.");
+      message.channel.send("Force level down complete.");
+      fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [FRCELVL] - " + 'Force level down was completed on user: ' + message.author.username + '. (ID: ' + message.author.id + ')');
       }, 1000);
       return;
   }
 
   else if (userID == config.ownerID && config.loggingEnabled == "TRUE" && config.loggingPerms == "TRUE") { // if user is owner and logging is enabled
     sql.get(`SELECT * FROM stats WHERE userId ="${message.author.id}"`).then(row => {
-      sql.run(`UPDATE stats SET points = ${row.points + 25} WHERE userId = ${message.author.id}`);
-      sql.run(`UPDATE stats SET level = ${row.level + 1} WHERE userId = ${message.author.id}`);
+      sql.run(`UPDATE stats SET points = ${row.points - 25} WHERE userId = ${message.author.id}`);
+      sql.run(`UPDATE stats SET level = ${row.level - 1} WHERE userId = ${message.author.id}`);
      }).catch(() => {
      });
      setTimeout(function() {
-      console.log("Force level up was used and completed successfully.");
-      message.channel.send("Force level up complete.");
-      fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [FRCELVL] - " + 'Force level up was completed on user: ' + message.author.username + '. (ID: ' + message.author.id + ')');
+      console.log("Force level down was used and completed successfully.");
+      message.channel.send("Force level down complete.");
+      fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [FRCELVL] - " + 'Force level down was completed on user: ' + message.author.username + '. (ID: ' + message.author.id + ')');
       }, 1000);
       return;
   };
