@@ -74,13 +74,9 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
     setTimeout(function() {
       sql.run("CREATE TABLE IF NOT EXISTS stats (userId TEXT, points INTEGER, wins INTEGER, losses INTEGER, level INTEGER)"); // Create table
     }, 500);
-    sql.close();
   }
   else {
     sql.open("./stats.sqlite"); // Open the database
-    setTimeout(function() {
-      sql.close();
-    }, 500);
   };
   // LOGS FILE
   if (!fs.existsSync('./log.txt') && config.loggingEnabled == "TRUE") {
