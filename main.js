@@ -19,7 +19,6 @@ const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
 const mainVersion = "1.0.1";
 const statstrackVersion = "1.1.1";
-const debuggingEnabled = "FALSE";
 
 // <<<--- Code starts past this line! --->>>
 
@@ -145,7 +144,7 @@ client.on("message", message => { // Read messages and run the correct command i
     };
     return;
   } catch (err) { // Else tell user that command was not found
-    if (debuggingEnabled == "TRUE") {
+    if (config.consoleDebuggingEnabled == "TRUE") {
       console.error(err); // IF THERE IS A FAILURE, THIS WILL DUMP IT TO CONSOLE!
     };
     console.log('Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
