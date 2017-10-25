@@ -3,7 +3,6 @@
 const Discord = require("discord.js"); // Require Discord.js for app to run
 const config = require("../config.json"); // Require access to the config.json
 const fs = require("fs"); // Allow filesystem read and write
-const sql = require("sqlite"); // SQL Database, requires the sqlite module
 
 exports.run = (client, message, args) => {
   var userID = message.author.id; // Get userID

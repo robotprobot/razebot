@@ -10,10 +10,11 @@
    (Do not change the token in config.json. This will break the connection to Discord!)
 */
 
+
 // <<<--- Variables start past this line! --->>>
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
-const client = new Discord.Client(); // Prepare a client for the bot
+const client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
 const talkedRecently = new Set();
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
@@ -21,8 +22,14 @@ const sql = require("sqlite"); // SQL Database, requires the sqlite module
 const mainVersion = "1.0.1";
 const statstrackVersion = "1.1.1";
 
-// <<<--- Code starts past this line! --->>>
+// <<<--- Variables end here! --->>>
 
+
+
+// <<<--- Bootup and commands code starts past this line! --->>>
+
+console.log("[ SYSTEM INITIALIZE ] Booting initialized...");
+console.log("[ SYSTEM CONNECTING ] Attempting connection to Discord...");
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
 /* THIS SEGMENT CAPTURES ERRORS AND CREATES A DUMP FILE.
@@ -36,8 +43,8 @@ client.on("warn", (e) => console.warn(e));
 */
 
 client.on("ready", () => { // Once bot has connected and initialised, do this part
+  console.log("[ SYSTEM CONNECTED  ] Connection successful.");
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
-  console.log(""); // Spacing
   console.log(config.botName + " online and ready!");
   console.log(""); // Spacing
   console.log('"RAZEBOT Discord Bot Framework" - V' + mainVersion);
@@ -85,11 +92,9 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
     stream.once('open', function(fd) { // Open the file to write to it
       stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
       stream.end(); // Close the file and save
- });
-
-
+  }
+  );
 };
-
 setTimeout(function() { // Bot boot logger
   if (config.loggingEnabled == "TRUE" && config.loggingStartup == "TRUE") {
   fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
@@ -111,22 +116,12 @@ client.on("guildDelete", guild => { // Notes in console when bot has left or bee
   };
 });
 
-client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
-    sql.get(`SELECT * FROM stats WHERE userId = "${member.id}"`).then(row => {
-      if (!row) {
-        console.log("New client detected. Adding entry to database...");
-        sql.run("INSERT INTO stats (userId, points, wins, losses, level) VALUES (?, ?, ?, ?, ?)", [member.id, 0, 0, 0, 0]);
-      }
-    }).catch(() => {
-  });
-});
-
 client.on("message", message => { // Read messages and run the correct command if possible
   if (!message.guild) return; // If message is not in server (like a dm), reject
   if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
   if (!message.content.startsWith(config.prefix)) return; // If the message does not contain the prefix, reject
   if (talkedRecently.has(message.author.id)) {
-    message.reply("you are currently on cooldown for 2.5 seconds! Please wait before sending another command.");
+    message.reply("you are currently on cooldown! Please wait 2.5 seconds before sending another command.");
     return;
   };
 
@@ -161,6 +156,28 @@ client.on("message", message => { // Read messages and run the correct command i
     return;
   }
 });
+
+// <<<--- Bootup and commands code ends here! --->>>
+
+
+
+// <<<--- New client database populator code starts past this line! --->>>
+
+client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
+    sql.get(`SELECT * FROM stats WHERE userId = "${member.id}"`).then(row => {
+      if (!row) {
+        console.log("New client detected. Adding entry to database...");
+        sql.run("INSERT INTO stats (userId, points, wins, losses, level) VALUES (?, ?, ?, ?, ?)", [member.id, 0, 0, 0, 0]);
+      }
+    }).catch(() => {
+  });
+});
+
+// <<<--- New client database populator code ends here! --->>>
+
+
+
+// <<<--- Tournament system code starts past this line! --->>>
 
 client.on("voiceJoin", function(user, voiceChannel) { // When someone joins a voice room
   if (!voiceChannel == config.tournamentJoinRoomID) return; // If voice room is not the designated room, reject
