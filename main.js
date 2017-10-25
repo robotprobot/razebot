@@ -13,30 +13,29 @@
 // <<<--- Variables start past this line! --->>>
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
-const client = new Discord.Client(); // Prepare a client for the bot
+const client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
+const talkedRecently = new Set();
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
 const mainVersion = "1.0.1";
 const statstrackVersion = "1.1.1";
 
-// <<<--- Code starts past this line! --->>>
+// <<<--- Variables end here! --->>>
 
+
+// <<<--- Bootup code starts past this line! --->>>
+
+console.log("[SYSTEM INITIALIZE] Booting initialized...");
+console.log("[SYSTEM CONNECTING] Attempting connection to Discord...");
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
-/* THIS SEGMENT CAPTURES ERRORS AND CREATES A DUMP FILE.
-   THIS WILL HOPEFULLY PREVENT FULL ON CRASHES AND THE BOT MAY BE ABLE TO RECOVER.
-*/
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
-//client.on("debug", (e) => console.info(e));
-/* END OF ERROR AND DUMPING SEGMENT.
-   BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.
-*/
 
 client.on("ready", () => { // Once bot has connected and initialised, do this part
+  console.log("[SYSTEM CONNECTED!] Connection successful.");
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
-  console.log(""); // Spacing
   console.log(config.botName + " online and ready!");
   console.log(""); // Spacing
   console.log('"RAZEBOT Discord Bot Framework" - V' + mainVersion);
@@ -49,7 +48,7 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log(""); // Spacing
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
-  client.user.setGame('on ' + mainVersion + '. Ready!');
+  client.user.setGame('on ' + mainVersion + '. "' + config.prefix + ' help"');
 
   if (config.loggingEnabled !== "TRUE") { // Alert about logging disabled
     console.log("Logging is disabled in config.json! No logging will occur.");
@@ -64,6 +63,11 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   // COMMANDS DIRECTORY
   if (!fs.existsSync('./commands/')) {
     console.log("Commands folder was not found, install is likely corrupt, please reinstall.");
+    process.exit(-1);
+  };
+  // ASSETS DIRECTORY
+  if (!fs.existsSync('./assets/')) {
+    console.log("Assets folder was not found, install is likely corrupt, please reinstall.");
     process.exit(-1);
   };
   // STATS DATABASE
@@ -84,16 +88,8 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
     stream.once('open', function(fd) { // Open the file to write to it
       stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
       stream.end(); // Close the file and save
- });
-
-  fs.readdir("../commands", (err, files) => { // Read the commands folder and prepare commands for use
-  if (err) return console.error(err); // If reading fails, write to console and abort
-    files.forEach(file => { // Prepare each file
-      let eventFunction = require(`./commands/${file}`);
-      let eventName = file.split(".")[0];
-      client.on(eventName, (...args) => eventFunction.run(client, ...args));
-    });
-  });
+  }
+  );
 };
 
 setTimeout(function() { // Bot boot logger
@@ -102,6 +98,11 @@ setTimeout(function() { // Bot boot logger
     }
   }, 500);
 });
+
+// <<<--- Bootup code ends here! --->>>
+
+
+// <<<--- Server connect/disconnect code starts past this line! --->>>
 
 client.on("guildCreate", guild => { // Notes in console when bot has joined a server
   console.log(`Joined server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
@@ -117,20 +118,27 @@ client.on("guildDelete", guild => { // Notes in console when bot has left or bee
   };
 });
 
-client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
-    sql.get(`SELECT * FROM stats WHERE userId = "${member.id}"`).then(row => {
-      if (!row) {
-        console.log("New client detected. Adding entry to database...");
-        sql.run("INSERT INTO stats (userId, points, wins, losses, level) VALUES (?, ?, ?, ?, ?)", [member.id, 0, 0, 0, 0]);
-      }
-    }).catch(() => {
-  });
-});
+// <<<--- Server connect/disconnect code ends here! --->>>
+
+
+// <<<--- Command system code starts past this line! --->>>
 
 client.on("message", message => { // Read messages and run the correct command if possible
   if (!message.guild) return; // If message is not in server (like a dm), reject
   if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
   if (!message.content.startsWith(config.prefix)) return; // If the message does not contain the prefix, reject
+  if (talkedRecently.has(message.author.id)) {
+    message.reply("you are currently on cooldown! Please wait 2.5 seconds before sending another command.");
+    return;
+  };
+
+  // Adds the user to the set so that they can't talk for 2.5 seconds
+  talkedRecently.add(message.author.id);
+  console.log(message.author.username + " (ID: " + message.author.id + ") is now on cooldown for 2.5 seconds.");
+  setTimeout(() => {
+  // Removes the user from the set after 2.5 seconds
+  talkedRecently.delete(message.author.id);
+  }, 2500);
 
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g); // If message accepted, remove prefix
   const command = args.shift().toLowerCase(); // Change resulting message to lowercase
@@ -155,6 +163,26 @@ client.on("message", message => { // Read messages and run the correct command i
     return;
   }
 });
+
+// <<<--- Command system code ends here! --->>>
+
+
+// <<<--- New client database populator code starts past this line! --->>>
+
+client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
+    sql.get(`SELECT * FROM stats WHERE userId = "${member.id}"`).then(row => {
+      if (!row) {
+        console.log("New client detected. Adding entry to database...");
+        sql.run("INSERT INTO stats (userId, points, wins, losses, level) VALUES (?, ?, ?, ?, ?)", [member.id, 0, 0, 0, 0]);
+      }
+    }).catch(() => {
+  });
+});
+
+// <<<--- New client database populator code ends here! --->>>
+
+
+// <<<--- Tournament system code starts past this line! --->>>
 
 client.on("voiceJoin", function(user, voiceChannel) { // When someone joins a voice room
   if (!voiceChannel == config.tournamentJoinRoomID) return; // If voice room is not the designated room, reject
