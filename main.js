@@ -31,15 +31,8 @@ console.log("[ SYSTEM INITIALIZE ] Booting initialized...");
 console.log("[ SYSTEM CONNECTING ] Attempting connection to Discord...");
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
-/* THIS SEGMENT CAPTURES ERRORS AND CREATES A DUMP FILE.
-   THIS WILL HOPEFULLY PREVENT FULL ON CRASHES AND THE BOT MAY BE ABLE TO RECOVER.
-*/
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
-//client.on("debug", (e) => console.info(e));
-/* END OF ERROR AND DUMPING SEGMENT.
-   BE CAREFUL IF HANDING OUT DEBUG LOGS BECAUSE THEY WILL CONTAIN THE BOTS LOGIN TOKEN.
-*/
 
 client.on("ready", () => { // Once bot has connected and initialised, do this part
   console.log("[ SYSTEM CONNECTED  ] Connection successful.");
