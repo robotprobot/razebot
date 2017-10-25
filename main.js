@@ -25,7 +25,6 @@ const statstrackVersion = "1.1.1";
 // <<<--- Variables end here! --->>>
 
 
-
 // <<<--- Bootup and commands code starts past this line! --->>>
 
 console.log("[ SYSTEM INITIALIZE ] Booting initialized...");
@@ -160,7 +159,6 @@ client.on("message", message => { // Read messages and run the correct command i
 // <<<--- Bootup and commands code ends here! --->>>
 
 
-
 // <<<--- New client database populator code starts past this line! --->>>
 
 client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a joining member if new
@@ -174,7 +172,6 @@ client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a j
 });
 
 // <<<--- New client database populator code ends here! --->>>
-
 
 
 // <<<--- Tournament system code starts past this line! --->>>
