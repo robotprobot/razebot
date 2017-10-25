@@ -10,7 +10,6 @@
    (Do not change the token in config.json. This will break the connection to Discord!)
 */
 
-
 // <<<--- Variables start past this line! --->>>
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
@@ -25,17 +24,17 @@ const statstrackVersion = "1.1.1";
 // <<<--- Variables end here! --->>>
 
 
-// <<<--- Bootup and commands code starts past this line! --->>>
+// <<<--- Bootup code starts past this line! --->>>
 
-console.log("[ SYSTEM INITIALIZE ] Booting initialized...");
-console.log("[ SYSTEM CONNECTING ] Attempting connection to Discord...");
+console.log("[SYSTEM INITIALIZE] Booting initialized...");
+console.log("[SYSTEM CONNECTING] Attempting connection to Discord...");
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
 client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 
 client.on("ready", () => { // Once bot has connected and initialised, do this part
-  console.log("[ SYSTEM CONNECTED  ] Connection successful.");
+  console.log("[SYSTEM CONNECTED!] Connection successful.");
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log(""); // Spacing
@@ -66,6 +65,11 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
     console.log("Commands folder was not found, install is likely corrupt, please reinstall.");
     process.exit(-1);
   };
+  // ASSETS DIRECTORY
+  if (!fs.existsSync('./assets/')) {
+    console.log("Assets folder was not found, install is likely corrupt, please reinstall.");
+    process.exit(-1);
+  };
   // STATS DATABASE
   if (!fs.existsSync('./stats.sqlite')) {
     console.log("Stats database was not found, generating...");
@@ -87,12 +91,18 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   }
   );
 };
+
 setTimeout(function() { // Bot boot logger
   if (config.loggingEnabled == "TRUE" && config.loggingStartup == "TRUE") {
   fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
     }
   }, 500);
 });
+
+// <<<--- Bootup code ends here! --->>>
+
+
+// <<<--- Server connect/disconnect code starts past this line! --->>>
 
 client.on("guildCreate", guild => { // Notes in console when bot has joined a server
   console.log(`Joined server joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
@@ -107,6 +117,11 @@ client.on("guildDelete", guild => { // Notes in console when bot has left or bee
     fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [CONNECT] - " + 'Disconnected/removed from: ' + guild.name + ' (id: '+ guild.id + ').');
   };
 });
+
+// <<<--- Server connect/disconnect code ends here! --->>>
+
+
+// <<<--- Command system code starts past this line! --->>>
 
 client.on("message", message => { // Read messages and run the correct command if possible
   if (!message.guild) return; // If message is not in server (like a dm), reject
@@ -149,7 +164,7 @@ client.on("message", message => { // Read messages and run the correct command i
   }
 });
 
-// <<<--- Bootup and commands code ends here! --->>>
+// <<<--- Command system code ends here! --->>>
 
 
 // <<<--- New client database populator code starts past this line! --->>>
