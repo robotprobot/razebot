@@ -1,7 +1,8 @@
-/* BOT FRAMEWORK FOR A DISCORD SERVER - CODENAME RAZEBOT
+/*
+  BOT FRAMEWORK FOR A DISCORD SERVER - CODENAME RAZEBOT
    USING DISCORD.JS LIBRARIES AND THE OFFICIAL DISCORD API
    CREATED 24/09/2017
-   MADE BY STEVEN WHEELER (robotprobot#8211)
+   MADE BY STEVEN WHEELER (Discord: robotprobot#8211)
 
    main.js is the main file for the bot
    included should be a commands folder, a soundfiles folder, and a config.json.
@@ -14,7 +15,7 @@
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
-const talkedRecently = new Set();
+const talkedRecently = new Set(); // Set for cooldown username storage
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
