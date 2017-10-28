@@ -23,3 +23,6 @@ The primary language is JavaScript.
   > node-opus is required for the voice system of the bot.
   > It is installable by the following command: 
   > npm install node-opus --save
+* FFMPEG
+  > ffmpeg is required for the voice system of the bot.
+  > Please google how to install this on your operating system.
