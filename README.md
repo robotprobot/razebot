@@ -18,3 +18,6 @@ The primary language is JavaScript.
 * sqlite
   > Sqlite is required for the stats tracking system, as it uses a SQL database.
   > It is installable by the following command: npm install sqlite --save
+* node-opus
+  > node-opus is required for the voice system of the bot.
+  > It is installable by the following command: npm install node-opus --save
