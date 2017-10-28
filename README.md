@@ -14,10 +14,12 @@ The primary language is JavaScript.
 #### *This project uses (and you require a copy of these for the program to work!)...*
 * Discord.js
   > Discord.js is a library that connects to Discord and allows API access.   
-  > It is developed by 'hydrabolt' and is available at https://github.com/hydrabolt/discord.js or installable by the following command: npm install discord.js --save
+  > It is developed by 'hydrabolt' and is available at https://github.com/hydrabolt/discord.js or installable by the following command:     > npm install discord.js --save
 * sqlite
   > Sqlite is required for the stats tracking system, as it uses a SQL database.
-  > It is installable by the following command: npm install sqlite --save
+  > It is installable by the following command: 
+  > npm install sqlite --save
 * node-opus
   > node-opus is required for the voice system of the bot.
-  > It is installable by the following command: npm install node-opus --save
+  > It is installable by the following command: 
+  > npm install node-opus --save
