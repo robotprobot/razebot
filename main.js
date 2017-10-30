@@ -195,77 +195,79 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
   const voiceChannel = config.tournamentJoinRoomID;
   var firstJoin;
 
-  if(newUserChannel == config.tournamentJoinRoomID) {
-    if (newMember.bot) return;
-    tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount + 1;
-      if (tournamentJoinRoomUserAmount == 1 || tournamentJoinRoomUserAmount == 2) {
-        if (currentlyactive == false) {
-        console.log(tournamentJoinRoomUserAmount);
-          currentlyactive = true;
-          firstJoin = newMember.username;
-          newMember.voiceChannel.join()
-            .then(connection => {
-              firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
-              firstvoicefile.once("end", () => {
-                secondvoicefile = connection.playFile('./soundfiles/preparingtournament.mp3');
-                secondvoicefile.once("end", () => {
-                  thirdvoicefile = connection.playFile('./soundfiles/selecttournament.mp3');
-                  thirdvoicefile.once("end", () => {
-                    currentlyactive = false;
-                  });
-                });
-              });
-            });
-          };
-        }
-      else if (tournamentJoinRoomUserAmount == 3 && currentlyactive == false) {
-        console.log(tournamentJoinRoomUserAmount);
-        currentlyactive = true;
-        newMember.voiceChannel.join()
-        .then(connection => {
-          firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
-          firstvoicefile.once("end", () => {
-            secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting3.mp3');
-            secondvoicefile.once("end", () => {
-              currentlyactive = false;
-            });
-          });
-        });
-      }
-      else if (tournamentJoinRoomUserAmount == 4 && currentlyactive == false) {
-        console.log(tournamentJoinRoomUserAmount);
-        currentlyactive = true;
-        newMember.voiceChannel.join()
-        .then(connection => {
-          firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
-          firstvoicefile.once("end", () => {
-            secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting2.mp3');
-            secondvoicefile.once("end", () => {
-              currentlyactive = false;
-            });
-          });
-        });
-      }
-      else if (tournamentJoinRoomUserAmount == 5 && currentlyactive == false) {
-        console.log(tournamentJoinRoomUserAmount);
-        currentlyactive = true;
-        newMember.voiceChannel.join()
-        .then(connection => {
-          firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
-          firstvoicefile.once("end", () => {
-            secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting1.mp3');
-            secondvoicefile.once("end", () => {
-              currentlyactive = false;
-            });
-          });
-        });
-      }
-      else if (tournamentJoinRoomUserAmount >= 6) {
-        console.log(tournamentJoinRoomUserAmount);
-          //play 5
-      }
-  else if (oldUserChannel == config.tournamentJoinRoomID) {
-    tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount - 1;
-    console.log(tournamentJoinRoomUserAmount);
-  }
-}});
+
+
+  //if(newUserChannel == config.tournamentJoinRoomID) {
+  //  if (newMember.bot) return;
+  //  tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount + 1;
+  //    if (tournamentJoinRoomUserAmount == 1 || tournamentJoinRoomUserAmount == 2) {
+  //      if (currentlyactive == false) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //        currentlyactive = true;
+  //        firstJoin = newMember.username;
+  //        newMember.voiceChannel.join()
+  //          .then(connection => {
+  //            firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //            firstvoicefile.once("end", () => {
+  //              secondvoicefile = connection.playFile('./soundfiles/preparingtournament.mp3');
+  //              secondvoicefile.once("end", () => {
+  //                thirdvoicefile = connection.playFile('./soundfiles/selecttournament.mp3');
+  //                thirdvoicefile.once("end", () => {
+  //                  currentlyactive = false;
+  //                });
+  //              });
+  //            });
+  //          });
+  //        };
+  //      }
+  //    else if (tournamentJoinRoomUserAmount == 3 && currentlyactive == false) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //      currentlyactive = true;
+  //      newMember.voiceChannel.join()
+  //      .then(connection => {
+  //        firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //        firstvoicefile.once("end", () => {
+  //          secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting3.mp3');
+  //          secondvoicefile.once("end", () => {
+  //            currentlyactive = false;
+  //          });
+  //        });
+  //      });
+  //    }
+  //    else if (tournamentJoinRoomUserAmount == 4 && currentlyactive == false) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //      currentlyactive = true;
+  //      newMember.voiceChannel.join()
+  //      .then(connection => {
+  //        firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //        firstvoicefile.once("end", () => {
+  //          secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting2.mp3');
+  //          secondvoicefile.once("end", () => {
+  //            currentlyactive = false;
+  //          });
+  //        });
+  //      });
+  //    }
+  //    else if (tournamentJoinRoomUserAmount == 5 && currentlyactive == false) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //      currentlyactive = true;
+  //      newMember.voiceChannel.join()
+  //      .then(connection => {
+  //        firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //        firstvoicefile.once("end", () => {
+  //          secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting1.mp3');
+  //          secondvoicefile.once("end", () => {
+  //            currentlyactive = false;
+  //          });
+  //        });
+  //      });
+  //    }
+  //    else if (tournamentJoinRoomUserAmount >= 6) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //        //play 5
+  //    }
+  //else if (oldUserChannel == config.tournamentJoinRoomID) {
+  //  tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount - 1;
+  //  console.log(tournamentJoinRoomUserAmount);
+  //}}
+});
