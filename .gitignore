@@ -4,4 +4,5 @@ notes.txt
 .eslintrc
 stats
 log.txt
-stats.sqlite
+database.sqlite
+package.json
