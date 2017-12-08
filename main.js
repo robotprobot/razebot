@@ -195,8 +195,6 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
   const voiceChannel = config.tournamentJoinRoomID;
   var firstJoin;
 
-
-
   //if(newUserChannel == config.tournamentJoinRoomID) {
   //  if (newMember.bot) return;
   //  tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount + 1;
@@ -213,7 +211,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
   //              secondvoicefile.once("end", () => {
   //                thirdvoicefile = connection.playFile('./soundfiles/selecttournament.mp3');
   //                thirdvoicefile.once("end", () => {
-  //                  currentlyactive = false;
+  //                 currentlyactive = false;
   //                });
   //              });
   //            });
@@ -235,7 +233,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
   //      });
   //    }
   //    else if (tournamentJoinRoomUserAmount == 4 && currentlyactive == false) {
-  //      console.log(tournamentJoinRoomUserAmount);
+  //     console.log(tournamentJoinRoomUserAmount);
   //      currentlyactive = true;
   //      newMember.voiceChannel.join()
   //      .then(connection => {
@@ -267,7 +265,7 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
   //        //play 5
   //    }
   //else if (oldUserChannel == config.tournamentJoinRoomID) {
-  //  tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount - 1;
-  //  console.log(tournamentJoinRoomUserAmount);
+  // tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount - 1;
+  // console.log(tournamentJoinRoomUserAmount);
   //}}
 });

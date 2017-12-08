@@ -8,7 +8,16 @@ const sql = require("sqlite"); // SQL Database, requires the sqlite module
 exports.run = (client, message, args) => {
   var userID = message.author.id; // Get userID
   sql.get(`SELECT * FROM stats WHERE userId ="${message.author.id}"`).then(row => {
-    if (!row) return message.reply("Database entry not found, please leave and rejoin the server. If this error still occurs, please contact an admin.");
+    if (!row) {
+      message.reply("database entry was not found, please wait whilst we attempt to generate an entry for you. If this error still occurs, please contact an admin.");
+      console.log(message.author.username + " (" + message.author.id + ") " + "attempted to access their stats, but there was no entry.");
+      console.log("Attempting to generate an entry in database for " + message.author.username + " (" + message.author.id + ")");
+      sql.run("INSERT INTO stats (userId, points, wins, losses, level) VALUES (?, ?, ?, ?, ?)", [message.author.id, 0, 0, 0, 0]);
+      console.log("Finished generating entry in database for " + message.author.username + " (" + message.author.id + ")");
+      setTimeout(() => {
+        message.reply("database entry creation finished. Please try the 'stats' command again.");
+      }, 2500);
+    }
     else {
       var embed = new Discord.RichEmbed() // Prepare an embed
         .setTitle("Stats for " + message.author.username)
