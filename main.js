@@ -43,7 +43,7 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log(config.botName + " online and ready!");
   console.log(""); // Spacing
   console.log('"RAZEBOT Discord Bot Framework" - V' + mainVersion);
-  console.log('"STATSTRACK Statistics Tracking System" - V' + statstrackVersion);
+  console.log('"STATSTRACK Statistics Tracking Backend" - V' + statstrackVersion);
   console.log(""); // Spacing
   console.log("RAZEBOT and STATSTRACK is developed by robotprobot (Steven Wheeler)");
   console.log("DISCORD: robotprobot#8211");
