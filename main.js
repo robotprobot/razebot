@@ -20,7 +20,7 @@ const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
 const mainVersion = "1.0.1";
-const statstrackVersion = "1.1.1";
+const statstrackVersion = "1.2.0";
 var tournamentJoinRoomUserAmount = 0;
 var currentlyactive = false;
 
