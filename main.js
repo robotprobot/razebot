@@ -20,6 +20,7 @@ const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
 const mainVersion = "1.0.1";
+const commandsframeworkVersion = "1.0.0";
 const statstrackVersion = "1.2.0";
 var tournamentJoinRoomUserAmount = 0;
 var currentlyactive = false;
@@ -37,18 +38,20 @@ client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 
 client.on("ready", () => { // Once bot has connected and initialised, do this part
-  console.log("[SYSTEMS CONNECTED] Connection successful.");
-  console.log(`[DISCORD CONNECTED] Logged in as ${client.user.tag}!`);
+  console.log("[DISCORD CONNECTED] Connection successful.");
+  console.log(`[DISCORD RESPONDED] Logged in as ${client.user.tag}!`);
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log(""); // Spacing
-  console.log('"RAZEBOT Discord Bot Framework" - V' + mainVersion);
-  console.log('"STATSTRACK Statistics Tracking Backend" - V' + statstrackVersion);
+  console.log("ACTIVE MODULES:");
+  console.log(' "RAZEBOT Discord Bot Framework" - V' + mainVersion);
+  console.log(' "COMMANDIT Modular Commands System" - V' + commandsframeworkVersion);
+  console.log(' "STATSTRACK Statistics Tracking Backend" - V' + statstrackVersion);
   console.log(""); // Spacing
-  console.log("RAZEBOT and STATSTRACK is developed by robotprobot (Steven Wheeler)");
-  console.log("DISCORD: robotprobot#8211");
-  console.log("TWITTER: @robot_probot");
-  console.log("GITHUB: https://github.com/robotprobot/razebot");
+  console.log("RAZEBOT and all other modules are developed by robotprobot (Steven Wheeler)");
+  console.log(" DISCORD: robotprobot#8211");
+  console.log(" TWITTER: @robot_probot");
+  console.log(" GITHUB: https://github.com/robotprobot/razebot");
   console.log(""); // Spacing
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
