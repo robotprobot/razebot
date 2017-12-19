@@ -3,8 +3,26 @@
 
 Razebot is my basic framework for a new bot idea that I am working on.
 
-Please note that attempting to compile and run the bot will result in failure as config.json is not included.
-This config contains a OAUTH token and owner ID's, therefore cannot be uploaded.
-
 This is built with NodeJS and the Discord.js library.
 The primary language is JavaScript.
+
+#### *Branch guide:*
+> Master - Main branch that works for other users.   
+> Beta - Secondary branch that only works for this programs devs.   
+> Webinterface - A third experimental branch for a web interface.   
+
+#### *This project uses (and you require a copy of these for the program to work!)...*
+* Discord.js
+  > Discord.js is a library that connects to Discord and allows API access.   
+  > It is developed by 'hydrabolt' and is available at https://github.com/hydrabolt/discord.js or installable by the following command:     > npm install discord.js --save
+* sqlite
+  > Sqlite is required for the stats tracking system, as it uses a SQL database.
+  > It is installable by the following command: 
+  > npm install sqlite --save
+* node-opus
+  > node-opus is required for the voice system of the bot.
+  > It is installable by the following command: 
+  > npm install node-opus --save
+* FFMPEG
+  > ffmpeg is required for the voice system of the bot.
+  > Please google how to install this on your operating system.

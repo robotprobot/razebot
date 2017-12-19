@@ -1,0 +1,15 @@
+{
+  "loginToken": "",
+  "botName": "",
+  "prefix": "",
+  "ownerID": "",
+  "tournamentStartRoomID": "",
+  
+  "loggingEnabled": "TRUE",
+  "loggingStartup": "TRUE",
+  "loggingCommand": "TRUE",
+  "loggingPerms": "TRUE",
+  "loggingConnect": "TRUE",
+  
+  "consoleDebuggingEnabled": "FALSE"
+}
