@@ -1,7 +1,8 @@
-/* BOT FRAMEWORK FOR A DISCORD SERVER - CODENAME RAZEBOT
+/*
+  BOT FRAMEWORK FOR A DISCORD SERVER - CODENAME RAZEBOT
    USING DISCORD.JS LIBRARIES AND THE OFFICIAL DISCORD API
    CREATED 24/09/2017
-   MADE BY STEVEN WHEELER (robotprobot#8211)
+   MADE BY STEVEN WHEELER (Discord: robotprobot#8211)
 
    main.js is the main file for the bot
    included should be a commands folder, a soundfiles folder, and a config.json.
@@ -14,12 +15,15 @@
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
 const client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
-const talkedRecently = new Set();
+const talkedRecently = new Set(); // Set for cooldown username storage
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
 const mainVersion = "1.0.1";
-const statstrackVersion = "1.1.1";
+const commandsframeworkVersion = "1.0.0";
+const statstrackVersion = "1.2.0";
+var tournamentJoinRoomUserAmount = 0;
+var currentlyactive = false;
 
 // <<<--- Variables end here! --->>>
 
@@ -34,17 +38,20 @@ client.on("error", (e) => console.error(e));
 client.on("warn", (e) => console.warn(e));
 
 client.on("ready", () => { // Once bot has connected and initialised, do this part
-  console.log("[SYSTEM CONNECTED!] Connection successful.");
+  console.log("[DISCORD CONNECTED] Connection successful.");
+  console.log(`[DISCORD RESPONDED] Logged in as ${client.user.tag}!`);
   console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
   console.log(config.botName + " online and ready!");
   console.log(""); // Spacing
-  console.log('"RAZEBOT Discord Bot Framework" - V' + mainVersion);
-  console.log('"STATSTRACK Statistics Tracking System" - V' + statstrackVersion);
+  console.log("ACTIVE MODULES:");
+  console.log(' "RAZEBOT Discord Bot Framework" - V' + mainVersion);
+  console.log(' "COMMANDIT Modular Commands System" - V' + commandsframeworkVersion);
+  console.log(' "STATSTRACK Statistics Tracking Backend" - V' + statstrackVersion);
   console.log(""); // Spacing
-  console.log("RAZEBOT and STATSTRACK is developed by robotprobot (Steven Wheeler)");
-  console.log("DISCORD: robotprobot#8211");
-  console.log("TWITTER: @robot_probot");
-  console.log("GITHUB: https://github.com/robotprobot/razebot");
+  console.log("RAZEBOT and all other modules are developed by robotprobot (Steven Wheeler)");
+  console.log(" DISCORD: robotprobot#8211");
+  console.log(" TWITTER: @robot_probot");
+  console.log(" GITHUB: https://github.com/robotprobot/razebot");
   console.log(""); // Spacing
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
@@ -70,16 +77,17 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
     console.log("Assets folder was not found, install is likely corrupt, please reinstall.");
     process.exit(-1);
   };
-  // STATS DATABASE
-  if (!fs.existsSync('./stats.sqlite')) {
-    console.log("Stats database was not found, generating...");
-    sql.open("./stats.sqlite"); // Create the database
+  // MAIN DATABASE
+  if (!fs.existsSync('./database.sqlite')) {
+    console.log("Main database was not found, generating...");
+    sql.open("./database.sqlite"); // Create the database
     setTimeout(function() {
       sql.run("CREATE TABLE IF NOT EXISTS stats (userId TEXT, points INTEGER, wins INTEGER, losses INTEGER, level INTEGER)"); // Create table
+      sql.run("CREATE TABLE IF NOT EXISTS gameResults (gameId TEXT, gameType TEXT, winningTeam INTEGER, player1Id TEXT, player1Team INTEGER, player2Id TEXT, player2Team INTEGER, player3Id TEXT, player3Team INTEGER, player4Id TEXT, player4Team INTEGER, player5Id TEXT, player5Team INTEGER)"); // Create table
     }, 500);
   }
   else {
-    sql.open("./stats.sqlite"); // Open the database
+    sql.open("./database.sqlite"); // Open the stats database
   };
   // LOGS FILE
   if (!fs.existsSync('./log.txt') && config.loggingEnabled == "TRUE") {
@@ -89,7 +97,7 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
       stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
       stream.end(); // Close the file and save
   }
-  );
+);
 };
 
 setTimeout(function() { // Bot boot logger
@@ -184,12 +192,83 @@ client.on("guildMemberAdd", member => { // Preparing the STATSTRACK file for a j
 
 // <<<--- Tournament system code starts past this line! --->>>
 
-client.on("voiceJoin", function(user, voiceChannel) { // When someone joins a voice room
-  if (!voiceChannel == config.tournamentJoinRoomID) return; // If voice room is not the designated room, reject
-  const mainChannel = client.channels.get(config.tournamentJoinRoomID); // Prepare the designated channels ID
-  mainChannel.join() // Join the designated channel
-   .then(connection => { // Connection is an instance of VoiceConnection - Begin a instance
-    const dispatcher = connection.playFile('./soundfiles/aplayerjoined.mp3'); // Play the mp3
-   })
-   .catch(console.log); // Catch errors and write to console
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+  let newUserChannel = newMember.voiceChannelID;
+  let oldUserChannel = oldMember.voiceChannelID;
+  const voiceChannel = config.tournamentJoinRoomID;
+  var firstJoin;
+
+  //if(newUserChannel == config.tournamentJoinRoomID) {
+  //  if (newMember.bot) return;
+  //  tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount + 1;
+  //    if (tournamentJoinRoomUserAmount == 1 || tournamentJoinRoomUserAmount == 2) {
+  //      if (currentlyactive == false) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //        currentlyactive = true;
+  //        firstJoin = newMember.username;
+  //        newMember.voiceChannel.join()
+  //          .then(connection => {
+  //            firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //            firstvoicefile.once("end", () => {
+  //              secondvoicefile = connection.playFile('./soundfiles/preparingtournament.mp3');
+  //              secondvoicefile.once("end", () => {
+  //                thirdvoicefile = connection.playFile('./soundfiles/selecttournament.mp3');
+  //                thirdvoicefile.once("end", () => {
+  //                 currentlyactive = false;
+  //                });
+  //              });
+  //            });
+  //          });
+  //        };
+  //      }
+  //    else if (tournamentJoinRoomUserAmount == 3 && currentlyactive == false) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //      currentlyactive = true;
+  //      newMember.voiceChannel.join()
+  //      .then(connection => {
+  //        firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //        firstvoicefile.once("end", () => {
+  //          secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting3.mp3');
+  //          secondvoicefile.once("end", () => {
+  //            currentlyactive = false;
+  //          });
+  //        });
+  //      });
+  //    }
+  //    else if (tournamentJoinRoomUserAmount == 4 && currentlyactive == false) {
+  //     console.log(tournamentJoinRoomUserAmount);
+  //      currentlyactive = true;
+  //      newMember.voiceChannel.join()
+  //      .then(connection => {
+  //        firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //        firstvoicefile.once("end", () => {
+  //          secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting2.mp3');
+  //          secondvoicefile.once("end", () => {
+  //            currentlyactive = false;
+  //          });
+  //        });
+  //      });
+  //    }
+  //    else if (tournamentJoinRoomUserAmount == 5 && currentlyactive == false) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //      currentlyactive = true;
+  //      newMember.voiceChannel.join()
+  //      .then(connection => {
+  //        firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //        firstvoicefile.once("end", () => {
+  //          secondvoicefile = connection.playFile('./soundfiles/waitingforplayers/waiting1.mp3');
+  //          secondvoicefile.once("end", () => {
+  //            currentlyactive = false;
+  //          });
+  //        });
+  //      });
+  //    }
+  //    else if (tournamentJoinRoomUserAmount >= 6) {
+  //      console.log(tournamentJoinRoomUserAmount);
+  //        //play 5
+  //    }
+  //else if (oldUserChannel == config.tournamentJoinRoomID) {
+  // tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount - 1;
+  // console.log(tournamentJoinRoomUserAmount);
+  //}}
 });
