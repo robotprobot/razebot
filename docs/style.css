@@ -1,3 +1,4 @@
+
 .index-sentence-one {
   text-align: center;
   font-family: helvetica;
@@ -7,32 +8,26 @@
 .index-sentence-two {
   text-align: center;
   font-family: helvetica;
-  LINE-HEIGHT:0px;
 }
 .index-sentence-three {
   text-align: center;
   font-family: helvetica;
-  LINE-HEIGHT:0px;
 }
 .index-sentence-four {
   text-align: center;
   font-family: helvetica;
-  LINE-HEIGHT:0px;
 }
 .index-sentence-five {
   text-align: center;
   font-family: helvetica;
-  LINE-HEIGHT:0px;
 }
 .index-sentence-six {
   text-align: center;
   font-family: helvetica;
-  LINE-HEIGHT:0px;
 }
 .index-sentence-seven {
   text-align: center;
   font-family: helvetica;
-  LINE-HEIGHT:0px;
 }
 .information-footer {
   position: fixed;
@@ -48,12 +43,11 @@
 .menu-bar {
   position: fixed;
   left: 0;
-  bottom: 59px;
+  bottom: 50px;
   width: 100%;
   background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
   text-align: center;
   font-family: helvetica;
-  LINE-HEIGHT:0px;
 }
 a {
   display: inline;
