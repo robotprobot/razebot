@@ -1,0 +1,67 @@
+.index-sentence-one {
+  text-align: center;
+  font-family: helvetica;
+  padding-top: 40px;
+  LINE-HEIGHT:0px;
+}
+.index-sentence-two {
+  text-align: center;
+  font-family: helvetica;
+  LINE-HEIGHT:0px;
+}
+.index-sentence-three {
+  text-align: center;
+  font-family: helvetica;
+  LINE-HEIGHT:0px;
+}
+.index-sentence-four {
+  text-align: center;
+  font-family: helvetica;
+  LINE-HEIGHT:0px;
+}
+.index-sentence-five {
+  text-align: center;
+  font-family: helvetica;
+  LINE-HEIGHT:0px;
+}
+.index-sentence-six {
+  text-align: center;
+  font-family: helvetica;
+  LINE-HEIGHT:0px;
+}
+.index-sentence-seven {
+  text-align: center;
+  font-family: helvetica;
+  LINE-HEIGHT:0px;
+}
+.information-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  color: white;
+  text-align: center;
+  font-family: helvetica;
+  LINE-HEIGHT:0px;
+}
+.menu-bar {
+  position: fixed;
+  left: 0;
+  bottom: 59px;
+  width: 100%;
+  background: linear-gradient(141deg, #0fb8ad 0%, #1fc8db 51%, #2cb5e8 75%);
+  text-align: center;
+  font-family: helvetica;
+  LINE-HEIGHT:0px;
+}
+a {
+  display: inline;
+  color: white;
+  padding: 7px 16px;
+  text-decoration: none;
+}
+a:hover {
+  background-color: #2cb5e8;
+  color: white;
+}
