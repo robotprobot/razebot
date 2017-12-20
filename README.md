@@ -6,10 +6,17 @@ Razebot is my basic framework for a new bot idea that I am working on.
 This is built with NodeJS and the Discord.js library.
 The primary language is JavaScript.
 
+There is also a github page stored in the docs folder.
+
+Languages used in this project:
+* NodeJS
+* JavaScript
+* HTML
+* CSS
+
 #### *Branch guide:*
 > Master - Main branch that works for other users.   
 > Beta - Secondary branch that only works for this programs devs.   
-> Webinterface - A third experimental branch for a web interface.   
 
 #### *This project uses (and you require a copy of these for the program to work!)...*
 * Discord.js
