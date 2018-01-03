@@ -10,7 +10,7 @@
    All necessary files are available on the github for this project.
 
    Bot is partially modifiable and can be changed via config.json.
-   (Do not change the token in config.json. This will break the connection to Discord!)
+   (This will need to be setup before first use!)
 */
 
 // <<<--- Variables start past this line! --->>>

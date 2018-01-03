@@ -1,4 +1,5 @@
-// This needs to send a message containing the ping when requested.
+// This needs to check that the request is in the secure channel, and the requester has permission to do this command.
+// It will then need to message back with either 'Unavailable in this channel', 'Insufficient permissions', or the log file to download.
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
 const config = require("../config.json"); // Require access to the config.json
