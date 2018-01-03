@@ -12,6 +12,7 @@
   "loggingCommand": "TRUE",
   "loggingPerms": "TRUE",
   "loggingConnect": "TRUE",
+  "logDownloadingAllowed": "TRUE",
   
   "consoleDebuggingEnabled": "FALSE"
 }
