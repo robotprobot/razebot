@@ -59,6 +59,13 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log(" DISCORD: robotprobot#8211");
   console.log(" TWITTER: @robot_probot");
   console.log(" GITHUB: https://github.com/robotprobot/razebot");
+  if (config.logDownloadingAllowed == "TRUE") {
+    console.log(""); // Spacing
+    console.log("ALERT: Remote Log Downloading is enabled!");
+    console.log("It is your responsibility to ensure that the Administration Text Room on Discord (defined in config.json)");
+    console.log("is secure and only allowed people can access.");
+    console.log("To disable Remote Log Downloading, set LogDownloadingAllowed to false in config.json.");
+  }
   console.log(""); // Spacing
   console.log("Listening for commands with the " + config.prefix + " prefix!");
   console.log(""); // Spacing
