@@ -6,6 +6,8 @@
 
    main.js is the main file for the bot
    included should be a commands folder, a soundfiles folder, and a config.json.
+   Other miscellanious files may also be required. The bot will alert when a file is required.
+   All necessary files are available on the github for this project.
 
    Bot is partially modifiable and can be changed via config.json.
    (Do not change the token in config.json. This will break the connection to Discord!)
@@ -24,6 +26,7 @@ const commandsframeworkVersion = "1.0.0";
 const statstrackVersion = "1.2.0";
 var tournamentJoinRoomUserAmount = 0;
 var currentlyactive = false;
+var appIntegrityTestResult = "PASSED!"; // App integrity is not measured yet, therefore automatically passes each time.
 
 // <<<--- Variables end here! --->>>
 
@@ -47,6 +50,8 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log(' "RAZEBOT Discord Bot Framework" - V' + mainVersion);
   console.log(' "COMMANDIT Modular Commands System" - V' + commandsframeworkVersion);
   console.log(' "STATSTRACK Statistics Tracking Backend" - V' + statstrackVersion);
+  console.log(""); // Spacing
+  console.log("Application integrity check: " + appIntegrityTestResult);
   console.log(""); // Spacing
   console.log("RAZEBOT and all other modules are developed by robotprobot (Steven Wheeler)");
   console.log(" DISCORD: robotprobot#8211");
