@@ -21,9 +21,10 @@ const talkedRecently = new Set(); // Set for cooldown username storage
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
-const mainVersion = "1.0.1";
-const commandsframeworkVersion = "1.0.0";
-const statstrackVersion = "1.2.0";
+const mainVersion = "1.0.3";
+const commandsframeworkVersion = "1.0.1";
+const loggingframeworkVersion = "1.0.2";
+const statstrackVersion = "1.0.3";
 var tournamentJoinRoomUserAmount = 0;
 var currentlyactive = false;
 var appIntegrityTestResult = "PASSED!"; // App integrity is not measured yet, therefore automatically passes each time.
@@ -49,6 +50,7 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log("ACTIVE MODULES:");
   console.log(' "RAZEBOT Discord Bot Framework" - V' + mainVersion);
   console.log(' "COMMANDIT Modular Commands System" - V' + commandsframeworkVersion);
+  console.log(' "LOGIT Access Violation And Command Logging System" - V' + loggingframeworkVersion);
   console.log(' "STATSTRACK Statistics Tracking Backend" - V' + statstrackVersion);
   console.log(""); // Spacing
   console.log("Application integrity check: " + appIntegrityTestResult);
