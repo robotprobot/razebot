@@ -34,6 +34,8 @@ var appIntegrityTestResult = "PASSED!"; // App integrity is not measured yet, th
 
 // <<<--- Bootup code starts past this line! --->>>
 
+throw 'No token detected -- Please set up the config.json before launching the bot.';
+
 console.log("[SYSTEM INITIALIZE] Booting initialized...");
 console.log("[SYSTEM CONNECTING] Attempting connection to Discord...");
 client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
