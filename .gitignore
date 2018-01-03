@@ -1,0 +1,8 @@
+ node_modules
+ config.json
+ notes.txt
+ .eslintrc
+ stats
+ log.txt
+ database.sqlite
+ voicelines.txt
