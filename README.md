@@ -21,7 +21,7 @@ Languages used in this project:
 #### *How to install:*
 > Clone the repo
 
-> Run cd razebot
+> Run 'cd razebot'
 
 > Run 'npm install'
 
