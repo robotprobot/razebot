@@ -18,7 +18,7 @@ Languages used in this project:
 > Master - Main branch that works for other users.   
 > Beta - Secondary branch that only works for this programs devs.   
 
-#### *How to install dependencies:*
+#### *How to install:*
 > Clone the repo
 
 > Run 'npm install'
