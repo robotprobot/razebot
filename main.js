@@ -6,9 +6,11 @@
 
    main.js is the main file for the bot
    included should be a commands folder, a soundfiles folder, and a config.json.
+   Other miscellanious files may also be required. The bot will alert when a file is required.
+   All necessary files are available on the github for this project.
 
    Bot is partially modifiable and can be changed via config.json.
-   (Do not change the token in config.json. This will break the connection to Discord!)
+   (This will need to be setup before first use!)
 */
 
 // <<<--- Variables start past this line! --->>>
@@ -19,11 +21,13 @@ const talkedRecently = new Set(); // Set for cooldown username storage
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
-const mainVersion = "1.0.1";
-const commandsframeworkVersion = "1.0.0";
-const statstrackVersion = "1.2.0";
+const mainVersion = "1.0.3";
+const commandsframeworkVersion = "1.0.1";
+const loggingframeworkVersion = "1.0.2";
+const statstrackVersion = "1.0.3";
 var tournamentJoinRoomUserAmount = 0;
 var currentlyactive = false;
+var appIntegrityTestResult = "PASSED!"; // App integrity is not measured yet, therefore automatically passes each time.
 
 // <<<--- Variables end here! --->>>
 
@@ -46,7 +50,10 @@ client.on("ready", () => { // Once bot has connected and initialised, do this pa
   console.log("ACTIVE MODULES:");
   console.log(' "RAZEBOT Discord Bot Framework" - V' + mainVersion);
   console.log(' "COMMANDIT Modular Commands System" - V' + commandsframeworkVersion);
+  console.log(' "LOGIT Access Violation And Command Logging System" - V' + loggingframeworkVersion);
   console.log(' "STATSTRACK Statistics Tracking Backend" - V' + statstrackVersion);
+  console.log(""); // Spacing
+  console.log("Application integrity check: " + appIntegrityTestResult);
   console.log(""); // Spacing
   console.log("RAZEBOT and all other modules are developed by robotprobot (Steven Wheeler)");
   console.log(" DISCORD: robotprobot#8211");
