@@ -15,8 +15,8 @@ Languages used in this project:
 * CSS
 
 #### *Branch guide:*
-> Master - Main branch that works for other users.   
-> Beta - Secondary branch that only works for this programs devs.   
+> Master - Main branch with latest stable changes.   
+> Beta - Heavily unstable branch which is constantly changing for testing.   
 
 #### *How to install:*
 > Clone the repo
