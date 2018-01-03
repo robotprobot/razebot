@@ -21,6 +21,10 @@ Languages used in this project:
 #### *How to install:*
 > Clone the repo
 
+> Run cd razebot
+
 > Run 'npm install'
+
+> Change your settings in config.json
 
 > Run 'node main.js'
