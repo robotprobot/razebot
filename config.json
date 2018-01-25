@@ -13,6 +13,7 @@
   "loggingPerms": "TRUE",
   "loggingConnect": "TRUE",
   "logDownloadingAllowed": "TRUE",
+  "remoteLogDeletePassword": "",
   
   "consoleDebuggingEnabled": "FALSE"
 }
