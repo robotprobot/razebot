@@ -19,6 +19,7 @@
   "homepage": "https://github.com/robotprobot/razebot#readme",
   "dependencies": {
     "discord.js": "^11.2.1",
+    "file-encrypt": "0.0.1",
     "node-opus": "^0.2.7",
     "sqlite": "^2.8.0"
   }

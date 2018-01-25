@@ -4,8 +4,8 @@
    CREATED 24/09/2017
    MADE BY STEVEN WHEELER (Discord: robotprobot#8211)
 
-   main.js is the main file for the bot
-   included should be a commands folder, a soundfiles folder, and a config.json.
+   Main.js is the main file for the bot.
+   Included should be a commands folder, a soundfiles folder, a assets folder, and a config.json.
    Other miscellanious files may also be required. The bot will alert when a file is required.
    All necessary files are available on the github for this project.
 
@@ -28,6 +28,7 @@ const statstrackVersion = "1.0.3";
 var tournamentJoinRoomUserAmount = 0;
 var currentlyactive = false;
 var appIntegrityTestResult = "PASSED!"; // App integrity is not measured yet, therefore automatically passes each time.
+                                        // APP INTEGRITY CHECK IS NOT A PRIORITY AND WILL LIKELY BE A END OF DEVELOPMENT TASK.
 
 // <<<--- Variables end here! --->>>
 
@@ -216,12 +217,93 @@ client.on('voiceStateUpdate', (oldMember, newMember) => {
   const voiceChannel = config.tournamentJoinRoomID;
   var firstJoin;
 
+  // ??? <<<<--- This is going to require a full rethink and redesign... --->>>> ???
+
+  //if (newMember.Client) return;
+
+  //function oneUser()  {
+    // get first users name and set as firstjoin.
+  //  firstJoin = newMember.username;
+  //  newMember.voiceChannel.join()
+  //    .then(connection => {
+  //      firstvoicefile = connection.playFile('./soundfiles/aplayerjoined.mp3');
+  //      firstvoicefile.once("end", () => {
+  //        secondvoicefile = connection.playFile('./soundfiles/preparingtournament.mp3');
+  //          secondvoicefile.once("end", () => {
+  //            thirdvoicefile = connection.playFile('./soundfiles/selecttournament.mp3');
+  //}
+  //function twoUsers()  {
+
+  //}
+  //function threeUsers()  {
+
+  //}
+  //function fourUsers()  {
+
+  //}
+  //function fiveUsers()  {
+
+  //}
+  //function sixUsers()  {
+
+  //}
+
+  //if (oldUserChannel !== voiceChannel && newUserChannel == voiceChannel) {
+    //user joined the tournament channel
+  //  tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount + 1;
+  //  if tournamentJoinRoomUserAmount == 1 {
+  //    oneUser;
+  //  }
+  //  if tournamentJoinRoomUserAmount == 2 {
+  //    twoUsers;
+  //  }
+  //  if tournamentJoinRoomUserAmount == 3 {
+  //    threeUsers;
+  //  }
+  //  if tournamentJoinRoomUserAmount == 4 {
+  //    fourUsers;
+  //  }
+  //  if tournamentJoinRoomUserAmount == 5 {
+  //    fiveUsers;
+  //  }
+  //  if tournamentJoinRoomUserAmount == 6 {
+  //    sixUsers;
+  //  }
+
+//  } else if (oldUserChannel == voiceChannel && newUserChannel !== voiceChannel) {
+    //user has left the tournament channel
+  //  tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount - 1;
+  //  if tournamentJoinRoomUserAmount == 0 {
+  //    return;
+  //  }
+  //  // play waiting for file with the amount of people required after the person leaving.
+  //  var amountRemaining = 6 - tournamentJoinRoomUserAmount;
+  //  if amountRemaining == 1 {
+  //    oneUser;
+  //  }
+  //  if amountRemaining == 2 {
+  //    twoUsers;
+  //  }
+  //  if amountRemaining == 3 {
+  //    threeUsers;
+  //  }
+  //  if amountRemaining == 4 {
+  //    fourUsers;
+  //  }
+  //  if amountRemaining == 5 {
+  //    fiveUsers;
+  //  }
+//  }
+//});
+
+  // !!! <<<<--- BELOW LIES LEGACY CODE FOR REFERENCING PURPOSES ONLY. IT IS NOT TO BE IN THE FINAL RELEASE. --->>>> !!!
+
   //if(newUserChannel == config.tournamentJoinRoomID) {
   //  if (newMember.bot) return;
   //  tournamentJoinRoomUserAmount = tournamentJoinRoomUserAmount + 1;
   //    if (tournamentJoinRoomUserAmount == 1 || tournamentJoinRoomUserAmount == 2) {
   //      if (currentlyactive == false) {
-  //      console.log(tournamentJoinRoomUserAmount);
+  //       console.log(tournamentJoinRoomUserAmount);
   //        currentlyactive = true;
   //        firstJoin = newMember.username;
   //        newMember.voiceChannel.join()
