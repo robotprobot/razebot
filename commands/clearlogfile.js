@@ -20,32 +20,46 @@ exports.run = (client, message, args) => {
     }
 
     else if (userID == config.ownerID && (!config.loggingEnabled == "TRUE" || !config.loggingPerms == "TRUE")) { // If user is owner and logging is disabled
-      fs.unlinkSync(logPath);
-      console.log('Log file deleted');
-      message.channel.send('Log file was sucessfully removed, generating new...');
-      console.log('Generating new log file...');
-      message.channel.send('Log clearup completed.');
-      var stream = fs.createWriteStream('./log.txt');
-      stream.once('open', function(fd) { // Open the file to write to it
-        stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
-        stream.end(); // Close the file and save
-        });
+      if (args == config.remoteLogDeletePassword) {
+        message.delete(1);
+        fs.unlinkSync(logPath);
+        console.log('Log file deleted');
+        message.channel.send('Log file was sucessfully removed, generating new...');
+        console.log('Generating new log file...');
+        message.channel.send('Log clearup completed.');
+        var stream = fs.createWriteStream('./log.txt');
+        stream.once('open', function(fd) { // Open the file to write to it
+          stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
+          stream.end(); // Close the file and save
+          });
+        }
+      else {
+        message.channel.send("Please also enter the Remote Log Clear Password.")
+        return;
+      }
     }
 
     else if (userID == config.ownerID && config.loggingEnabled == "TRUE" && config.loggingPerms == "TRUE") { // if user is owner and logging is enabled
-      fs.unlinkSync(logPath);
-      console.log('Log file deleted');
-      message.channel.send('Log file was sucessfully removed, generating new...');
-      console.log('Generating new log file...');
-      message.channel.send('Log clearup completed.');
-      var stream = fs.createWriteStream('./log.txt');
-      stream.once('open', function(fd) { // Open the file to write to it
-        stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
-        stream.end(); // Close the file and save
-      });
-      setTimeout(function() {
-        fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [LOGEXPT] - " + 'Log was cleaned by ' + message.author.username + '. (ID: ' + message.author.id + ')');
-        }, 1000);
+      if (args == config.remoteLogDeletePassword) {
+        message.delete(1);
+        fs.unlinkSync(logPath);
+        console.log('Log file deleted');
+        message.channel.send('Log file was sucessfully removed, generating new...');
+        console.log('Generating new log file...');
+        message.channel.send('Log clearup completed.');
+        var stream = fs.createWriteStream('./log.txt');
+        stream.once('open', function(fd) { // Open the file to write to it
+          stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
+          stream.end(); // Close the file and save
+        });
+        setTimeout(function() {
+          fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [LOGEXPT] - " + 'Log was cleaned by ' + message.author.username + '. (ID: ' + message.author.id + ')');
+          }, 1000);
+        return;
+      }
+    else {
+      message.channel.send("Please also enter the Remote Log Clear Password.")
       return;
-    };
+    }
+  }
 }; // Go back to main.js
