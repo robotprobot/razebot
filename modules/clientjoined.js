@@ -11,6 +11,6 @@ module.exports = {
          console.log("New client detected. Adding entry to database...");
          sql.run("INSERT INTO stats (userId, points, wins, losses, level) VALUES (?, ?, ?, ?, ?)", [member.id, 0, 0, 0, 0]);
        }
-     }).catch(() => {
-   });
-}
+     });
+   }
+};
