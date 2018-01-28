@@ -1,5 +1,4 @@
-module.exports = {
-   add: function() {
+exports.run = (member) => {
      const Discord = require("discord.js"); // Require Discord.js for app to run
      const client = global.client; // Prepare a client for the bot
      const fs = require("fs"); // Prepare file reading

@@ -65,8 +65,8 @@ client.on("guildDelete", guild => {
   serverconnection.leave();
 });
 
-client.on("guildMemberAdd", member => {
-  clientjoin.add(); // broke
+client.on("guildMemberAdd", (member) => {
+  clientjoin.run(member);
 });
 
 client.on('voiceStateUpdate', (oldMember, newMember) => {
