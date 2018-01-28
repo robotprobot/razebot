@@ -5,7 +5,7 @@
    MADE BY STEVEN WHEELER (Discord: robotprobot#8211)
 
    Main.js is the main file for the bot.
-   Included should be a commands folder, a soundfiles folder, a assets folder, and a config.json.
+   Included should be a modules folder, a commands folder, a soundfiles folder, a assets folder, and a config.json.
    Other miscellanious files may also be required. The bot will alert when a file is required.
    All necessary files are available on the github for this project.
 
@@ -25,8 +25,7 @@ const sql = require("sqlite"); // SQL Database, requires the sqlite module
 
 // <<<--- Variables end here! --->>>
 
-
-// <<<--- Module requiring starts here! --->>>
+// <<<--- Module loading starts here! --->>>
 
 const bootup = require('./modules/bootup.js');
 const serverconnection = require('./modules/serverconnection.js');
@@ -34,7 +33,7 @@ const commandhandler = require('./modules/commandhandler.js');
 const clientjoin = require('./modules/clientjoined.js');
 const voicesystem = require('./modules/voicesystem.js');
 
-// <<<--- Module requiring ends here! --->>>
+// <<<--- Module loading ends here! --->>>
 
 // <<<--- Module activation starts here! --->>>
 
