@@ -1,6 +1,6 @@
 {
   "mainVersion": "1.0.4",
-  "commandsframeworkVersion": "1.0.1",
+  "commandsframeworkVersion": "1.0.2",
   "loggingframeworkVersion": "1.0.2",
   "statstrackVersion": "1.0.3"
 }

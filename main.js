@@ -25,8 +25,7 @@ const sql = require("sqlite"); // SQL Database, requires the sqlite module
 
 // <<<--- Variables end here! --->>>
 
-
-// <<<--- Module requiring starts here! --->>>
+// <<<--- Module loading starts here! --->>>
 
 const bootup = require('./modules/bootup.js');
 const serverconnection = require('./modules/serverconnection.js');
@@ -34,7 +33,7 @@ const commandhandler = require('./modules/commandhandler.js');
 const clientjoin = require('./modules/clientjoined.js');
 const voicesystem = require('./modules/voicesystem.js');
 
-// <<<--- Module requiring ends here! --->>>
+// <<<--- Module loading ends here! --->>>
 
 // <<<--- Module activation starts here! --->>>
 

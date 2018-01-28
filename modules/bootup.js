@@ -38,6 +38,7 @@ module.exports = {
        console.log(" DISCORD: robotprobot#8211");
        console.log(" TWITTER: @robot_probot");
        console.log(" GITHUB: https://github.com/robotprobot/razebot");
+       console.log(" RAZEBOT WEBSITE: https://robotprobot.github.io/razebot/")
        if (config.logDownloadingAllowed == "TRUE") {
          console.log(""); // Spacing
          console.log("ALERT: Remote Log Downloading is enabled!");
@@ -94,7 +95,7 @@ module.exports = {
 
      setTimeout(function() { // Bot boot logger
        if (config.loggingEnabled == "TRUE" && config.loggingStartup == "TRUE") {
-         fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
+         fs.appendFileSync('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
        }
      }, 500);
    })

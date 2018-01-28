@@ -10,7 +10,7 @@ exports.run = (message) => {
   if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
   if (!message.content.startsWith(config.prefix)) return; // If the message does not contain the prefix, reject
   if (talkedRecently.has(message.author.id)) {
-    message.reply("you are currently on cooldown! Please wait 2.5 seconds before sending another command.");
+    message.reply("You are currently on cooldown! Please wait 2.5 seconds before sending another command.");
     return;
   };
 
@@ -30,7 +30,7 @@ exports.run = (message) => {
    commandFile.run(client, message, args); // If command exists, run it
    console.log('Command "' + command + '" was found successfully and used by ' + message.author.username + '. (ID: ' + message.author.id + ')');
    if (config.loggingEnabled == "TRUE" && config.loggingCommand == "TRUE") {
-     fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [COMMAND] - " + 'Command "' + command + '" was found successfully and used by ' + message.author.username + '. (ID: ' + message.author.id + ')');
+     fs.appendFileSync('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [COMMAND] - " + 'Command "' + command + '" was found successfully and used by ' + message.author.username + '. (ID: ' + message.author.id + ')');
    };
    return;
    } catch (err) { // Else tell user that command was not found
@@ -40,7 +40,7 @@ exports.run = (message) => {
    console.log('Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
    message.channel.send("Command not recognised");
    if (config.loggingEnabled == "TRUE" && config.loggingCommand == "TRUE") {
-     fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [COMMAND] - " + 'Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
+     fs.appendFileSync('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [COMMAND] - " + 'Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
    };
    return;
   }
