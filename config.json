@@ -1,0 +1,19 @@
+{
+  "loginToken": "",
+  "botName": "",
+  "prefix": "",
+  "ownerID": "",
+  
+  "tournamentStartRoomID": "",
+  "administrationRoomID": "",
+  
+  "loggingEnabled": "TRUE",
+  "loggingStartup": "TRUE",
+  "loggingCommand": "TRUE",
+  "loggingPerms": "TRUE",
+  "loggingConnect": "TRUE",
+  "logDownloadingAllowed": "TRUE",
+  "remoteLogDeletePassword": "",
+  
+  "consoleDebuggingEnabled": "FALSE"
+}
