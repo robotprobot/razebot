@@ -12,7 +12,7 @@ exports.run = (message) => {
       if (talkedRecently.has(message.author.id)) {
         message.reply("you are currently on cooldown! Please wait 2.5 seconds before sending another command.");
         return;
-        };
+      };
 
       // Adds the user to the set so that they can't talk for 2.5 seconds
      talkedRecently.add(message.author.id);
