@@ -11,6 +11,18 @@ module.exports = {
      const loggingframeworkVersion = versioninfo.loggingframeworkVersion;
      const statstrackVersion = versioninfo.statstrackVersion;
 
+     if (config.loginToken == "") {
+       throw 'Config.json is not properly setup. Please set this up before attempting to launch the bot.';
+     }
+
+     console.log("[SYSTEM INITIALIZE] Booting initialized...");
+     console.log("[SYSTEM CONNECTING] Attempting connection to Discord...");
+     client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
+
+     client.on("error", (e) => console.error(e));
+     client.on("warn", (e) => console.warn(e));
+
+     client.on("ready", () => { // Once bot has connected and initialised, do this part
        console.log("[DISCORD CONNECTED] Connection successful.");
        console.log(`[DISCORD RESPONDED] Logged in as ${client.user.tag}!`);
        console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
@@ -77,14 +89,14 @@ module.exports = {
          stream.once('open', function(fd) { // Open the file to write to it
            stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
            stream.end(); // Close the file and save
-       }
-     );
+       });
      };
 
      setTimeout(function() { // Bot boot logger
        if (config.loggingEnabled == "TRUE" && config.loggingStartup == "TRUE") {
-       fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
-         }
-       }, 500);
-   }
+         fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
+       }
+     }, 500);
+   })
+ }
 }

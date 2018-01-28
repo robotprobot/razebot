@@ -38,20 +38,7 @@ const voicesystem = require('./modules/voicesystem.js');
 
 // <<<--- Module activation starts here! --->>>
 
-if (config.loginToken == "") {
-  throw 'Config.json is not properly setup. Please set this up before attempting to launch the bot.';
-}
-
-console.log("[SYSTEM INITIALIZE] Booting initialized...");
-console.log("[SYSTEM CONNECTING] Attempting connection to Discord...");
-client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
-
-client.on("error", (e) => console.error(e));
-client.on("warn", (e) => console.warn(e));
-
-client.on("ready", () => { // Once bot has connected and initialised, do this part
-  bootup.boot();
-});
+bootup.boot();
 
 client.on("message", (message) => {
   commandhandler.run(message);
