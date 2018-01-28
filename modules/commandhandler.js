@@ -34,6 +34,7 @@ exports.run = (message) => {
        };
        return;
        } catch (err) { // Else tell user that command was not found
+
        if (config.consoleDebuggingEnabled == "TRUE") {
          console.error(err); // IF THERE IS A FAILURE, THIS WILL DUMP IT TO CONSOLE!
        };
