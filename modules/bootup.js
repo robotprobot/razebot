@@ -1,8 +1,7 @@
 module.exports = {
    boot: function() {
      const Discord = require("discord.js"); // Require Discord.js for app to run
-     const client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
-     const talkedRecently = new Set(); // Set for cooldown username storage
+     const client = global.client; // Prepare a client for the bot
      const fs = require("fs"); // Prepare file reading
      const config = require("../config.json"); // Require the config file for the bot
      const versioninfo = require("../versioninfo.json"); // Require the versioninfo file for the bot
@@ -90,15 +89,14 @@ module.exports = {
          stream.once('open', function(fd) { // Open the file to write to it
            stream.write('Log generated on ' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -- You can modify what actions are logged, or turn off logging completely in config.json");
            stream.end(); // Close the file and save
-       }
-     );
+       });
      };
 
      setTimeout(function() { // Bot boot logger
        if (config.loggingEnabled == "TRUE" && config.loggingStartup == "TRUE") {
-       fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
-         }
-       }, 500);
-     });;
-   }
+         fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
+       }
+     }, 500);
+   })
+ }
 }

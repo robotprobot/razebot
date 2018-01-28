@@ -53,7 +53,7 @@ exports.run = (client, message, args) => {
           stream.end(); // Close the file and save
         });
         setTimeout(function() {
-          fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [LOGEXPT] - " + 'Log was cleaned by ' + message.author.username + '. (ID: ' + message.author.id + ')');
+          fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) - * - [LOGCLND] - " + 'Log was cleaned by ' + message.author.username + '. (ID: ' + message.author.id + ')');
           }, 1000);
         return;
       }
