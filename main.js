@@ -16,18 +16,12 @@
 // <<<--- Variables start past this line! --->>>
 
 const Discord = require("discord.js"); // Require Discord.js for app to run
-const client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
-const talkedRecently = new Set(); // Set for cooldown username storage
+global.client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
+global.talkedRecently = new Set(); // Set for cooldown username storage
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const versioninfo = require("./versioninfo.json"); // Require the versioninfo file for the bot
 const sql = require("sqlite"); // SQL Database, requires the sqlite module
-const mainVersion = versioninfo.mainVersion;
-const commandsframeworkVersion = versioninfo.commandsframeworkVersion;
-const loggingframeworkVersion = versioninfo.loggingframeworkVersion;
-const statstrackVersion = versioninfo.statstrackVersion;
-var tournamentJoinRoomUserAmount = 0;
-var currentlyactive = false;
 
 // <<<--- Variables end here! --->>>
 
@@ -44,7 +38,24 @@ const voicesystem = require('./modules/voicesystem.js');
 
 // <<<--- Module activation starts here! --->>>
 
-bootup.boot();
+if (config.loginToken == "") {
+  throw 'Config.json is not properly setup. Please set this up before attempting to launch the bot.';
+}
+
+console.log("[SYSTEM INITIALIZE] Booting initialized...");
+console.log("[SYSTEM CONNECTING] Attempting connection to Discord...");
+client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
+
+client.on("error", (e) => console.error(e));
+client.on("warn", (e) => console.warn(e));
+
+client.on("ready", () => { // Once bot has connected and initialised, do this part
+  bootup.boot();
+});
+
+client.on("message", (message) => {
+  commandhandler.run(message);
+});
 
 client.on("guildCreate", guild => {
   serverconnection.join();
@@ -52,10 +63,6 @@ client.on("guildCreate", guild => {
 
 client.on("guildDelete", guild => {
   serverconnection.leave();
-});
-
-client.on("message", message => {
-  commandhandler.calculate(message); // broke
 });
 
 client.on("guildMemberAdd", member => {

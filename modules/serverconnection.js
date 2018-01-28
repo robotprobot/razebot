@@ -1,8 +1,7 @@
 module.exports = {
    join: function() {
      const Discord = require("discord.js"); // Require Discord.js for app to run
-     const client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
-     const talkedRecently = new Set(); // Set for cooldown username storage
+     const client = global.client; // Prepare a client for the bot
      const fs = require("fs"); // Prepare file reading
      const config = require("../config.json"); // Require the config file for the bot
      const sql = require("sqlite"); // SQL Database, requires the sqlite module

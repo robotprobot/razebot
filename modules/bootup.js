@@ -1,8 +1,7 @@
 module.exports = {
    boot: function() {
      const Discord = require("discord.js"); // Require Discord.js for app to run
-     const client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
-     const talkedRecently = new Set(); // Set for cooldown username storage
+     const client = global.client; // Prepare a client for the bot
      const fs = require("fs"); // Prepare file reading
      const config = require("../config.json"); // Require the config file for the bot
      const versioninfo = require("../versioninfo.json"); // Require the versioninfo file for the bot
@@ -12,18 +11,6 @@ module.exports = {
      const loggingframeworkVersion = versioninfo.loggingframeworkVersion;
      const statstrackVersion = versioninfo.statstrackVersion;
 
-     if (config.loginToken == "") {
-       throw 'Config.json is not properly setup. Please set this up before attempting to launch the bot.';
-     }
-
-     console.log("[SYSTEM INITIALIZE] Booting initialized...");
-     console.log("[SYSTEM CONNECTING] Attempting connection to Discord...");
-     client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
-
-     client.on("error", (e) => console.error(e));
-     client.on("warn", (e) => console.warn(e));
-
-     client.on("ready", () => { // Once bot has connected and initialised, do this part
        console.log("[DISCORD CONNECTED] Connection successful.");
        console.log(`[DISCORD RESPONDED] Logged in as ${client.user.tag}!`);
        console.log(""); // "Dont let them back in, im teaching them a lesson about spacing"
@@ -99,6 +86,5 @@ module.exports = {
        fs.appendFile('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [STARTUP] - " + "Bot booted successfully.");
          }
        }, 500);
-     });;
    }
 }
