@@ -4,3 +4,4 @@
 
 global.client = undefined;
 global.talkedRecently = undefined;
+global.voiceCount = undefined;

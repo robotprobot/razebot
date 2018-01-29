@@ -71,6 +71,11 @@ module.exports = {
          console.log("Assets folder was not found, install is likely corrupt, please reinstall.");
          process.exit(-1);
        };
+       // ASSETS DIRECTORY
+       if (!fs.existsSync('./modules/')) {
+         console.log("Modules folder was not found, install is likely corrupt, please reinstall.");
+         process.exit(-1);
+       };
        // MAIN DATABASE
        if (!fs.existsSync('./database.sqlite')) {
          console.log("Main database was not found, generating...");
