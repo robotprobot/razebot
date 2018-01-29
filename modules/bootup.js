@@ -49,7 +49,7 @@ module.exports = {
        console.log(""); // Spacing
        console.log("Listening for commands with the " + config.prefix + " prefix!");
        console.log(""); // Spacing
-       client.user.setGame('on ' + mainVersion + '. "' + config.prefix + ' help"');
+       client.user.setActivity('on ' + mainVersion + '. "' + config.prefix + ' help"');
 
        if (config.loggingEnabled !== "TRUE") { // Alert about logging disabled
          console.log("Logging is disabled in config.json! No logging will occur.");
