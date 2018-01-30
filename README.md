@@ -1,7 +1,7 @@
 # razebot
 ### A discord bot built off the Discord.js library.
 
-Razebot is my basic framework for a new bot idea that I am working on.
+Razebot is my ~~basic~~ framework for a new bot idea that I am working on.
 
 This is built with NodeJS and the Discord.js library.
 The primary language is JavaScript.
