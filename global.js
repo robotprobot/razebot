@@ -4,4 +4,13 @@
 
 global.client = undefined;
 global.talkedRecently = undefined;
-global.voiceCount = undefined;
+
+global.counterstrikeWaitingCount = undefined;
+global.destinyraidWaitingCount = undefined;
+global.rainbowsixWaitingCount = undefined;
+global.overwatchWaitingCount = undefined;
+
+global.counterstrikeWaitingList = undefined;
+global.destinyraidWaitingList = undefined;
+global.rainbowsixWaitingList = undefined;
+global.overwatchWaitingList = undefined;

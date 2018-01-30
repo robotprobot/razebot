@@ -16,6 +16,7 @@ module.exports = {
      }
 
      console.log("[SYSTEM INITIALIZE] Booting initialized...");
+     console.log("[SYSTEM LOAD FILES] Loading required files...");
      console.log("[SYSTEM CONNECTING] Attempting connection to Discord...");
      client.login(config.loginToken); // Connect to the Discord service and provide bots identity to server
 
@@ -50,6 +51,16 @@ module.exports = {
        console.log("Listening for commands with the " + config.prefix + " prefix!");
        console.log(""); // Spacing
        client.user.setActivity('on ' + mainVersion + '. "' + config.prefix + ' help"');
+
+       const counterstrikeVoiceRoom = (client.channels.get(config.counterStrikeJoinRoomID));
+       const destinyraidVoiceRoom = (client.channels.get(config.destinyRaidJoinRoomID));
+       const rainbowsixVoiceRoom = (client.channels.get(config.rainbowSixSiegeJoinRoomID));
+       const overwatchVoiceRoom = (client.channels.get(config.overwatchJoinRoomID));
+
+       counterstrikeVoiceRoom.setUserLimit(10);
+       destinyraidVoiceRoom.setUserLimit(6);
+       rainbowsixVoiceRoom.setUserLimit(5);
+       overwatchVoiceRoom.setUserLimit(6);
 
        if (config.loggingEnabled !== "TRUE") { // Alert about logging disabled
          console.log("Logging is disabled in config.json! No logging will occur.");

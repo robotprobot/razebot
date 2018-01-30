@@ -6,3 +6,4 @@ stats
 log.txt
 database.sqlite
 voicelines.txt
+SHARD_EXPERIMENTATION.js

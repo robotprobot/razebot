@@ -1,3 +1,0 @@
-exports.run = (oldMember, newMember) => {
-
-};

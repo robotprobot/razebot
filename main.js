@@ -18,7 +18,14 @@
 const Discord = require("discord.js"); // Require Discord.js for app to run
 global.client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
 global.talkedRecently = new Set(); // Set for cooldown username storage
-global.voiceCount = 0;
+global.counterstrikeWaitingList = new Set();
+global.destinyraidWaitingList = new Set();
+global.rainbowsixWaitingList = new Set();
+global.overwatchWaitingList = new Set();
+global.counterstrikeWaitingCount = 0;
+global.destinyraidWaitingCount = 0;
+global.rainbowsixWaitingCount = 0;
+global.overwatchWaitingCount = 0;
 const fs = require("fs"); // Prepare file reading
 const config = require("./config.json"); // Require the config file for the bot
 const versioninfo = require("./versioninfo.json"); // Require the versioninfo file for the bot
