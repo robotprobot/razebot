@@ -4,8 +4,8 @@ exports.run = (newMember) => {
   const config = require("../config.json"); // Require the config file for the bot
 
   if (global.counterstrikeWaitingCount = 10) {
-    //write to Database
     //choose teams
+    //write to Database
     //create channels
     //move users
     //start game
