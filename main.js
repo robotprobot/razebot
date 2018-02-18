@@ -18,10 +18,10 @@
 const Discord = require("discord.js"); // Require Discord.js for app to run
 global.client = new Discord.Client({forceFetchUsers: true}); // Prepare a client for the bot
 global.talkedRecently = new Set(); // Set for cooldown username storage
-global.counterstrikeWaitingList = new Set();
-global.destinyraidWaitingList = new Set();
-global.rainbowsixWaitingList = new Set();
-global.overwatchWaitingList = new Set();
+global.counterstrikeWaitingList = [];
+global.destinyraidWaitingList = [];
+global.rainbowsixWaitingList = [];
+global.overwatchWaitingList = [];
 global.counterstrikeWaitingCount = 0;
 global.destinyraidWaitingCount = 0;
 global.rainbowsixWaitingCount = 0;

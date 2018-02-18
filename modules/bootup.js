@@ -90,10 +90,10 @@ module.exports = {
        // MAIN DATABASE
        if (!fs.existsSync('./database.sqlite')) {
          console.log("Main database was not found, generating...");
-         sql.open("../database.sqlite"); // Create the database
+         sql.open("./database.sqlite"); // Create the database
          setTimeout(function() {
            sql.run("CREATE TABLE IF NOT EXISTS stats (userId TEXT, points INTEGER, wins INTEGER, losses INTEGER, level INTEGER)"); // Create table
-           sql.run("CREATE TABLE IF NOT EXISTS gameResults (gameId TEXT, gameType TEXT, winningTeam INTEGER, player1Id TEXT, player1Team INTEGER, player2Id TEXT, player2Team INTEGER, player3Id TEXT, player3Team INTEGER, player4Id TEXT, player4Team INTEGER, player5Id TEXT, player5Team INTEGER)"); // Create table
+           sql.run("CREATE TABLE IF NOT EXISTS gameResults (gameId INTEGER PRIMARY KEY, gameType TEXT, winningTeam INTEGER, player1Id TEXT, player1Team INTEGER, player2Id TEXT, player2Team INTEGER, player3Id TEXT, player3Team INTEGER, player4Id TEXT, player4Team INTEGER, player5Id TEXT, player5Team INTEGER, player6Id TEXT, player6Team INTEGER, player7Id TEXT, player7Team INTEGER, player8Id TEXT, player8Team INTEGER, player9Id TEXT, player9Team INTEGER, player10Id TEXT, player10Team INTEGER)"); // Create table
          }, 500);
        }
        else {

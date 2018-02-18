@@ -20,35 +20,39 @@ exports.run = (oldMember, newMember) => {
 
   if (newMemberChannel == config.counterStrikeJoinRoomID) {
     counterstrikeWaitingCount = counterstrikeWaitingCount + 1
-    counterstrikeWaitingList.add(user);
+    global.counterstrikeWaitingList.push(user);
     counterStrike.run(newMember);
   }
   if (newMemberChannel == config.destinyRaidJoinRoomID) {
     destinyraidWaitingCount = destinyraidWaitingCount + 1
-    destinyraidWaitingList.add(user);
+    global.destinyraidWaitingList.push(user);
     destinyRaid.run(newMember);
   }
   if (newMemberChannel == config.rainbowSixSiegeJoinRoomID) {
     rainbowsixWaitingCount = rainbowsixWaitingCount + 1
-    rainbowsixWaitingList.add(user);
+    global.rainbowsixWaitingList.push(user);
     rainbowSix.run(newMember);
   }
   if (newMemberChannel == config.overwatchJoinRoomID) {
     overwatchWaitingCount = overwatchWaitingCount + 1
-    overwatchWaitingList.add(user);
+    global.overwatchWaitingList.push(user);
     overwatch.run(newMember);
   }
 
   if (oldMemberChannel == config.counterStrikeJoinRoomID) {
     counterstrikeWaitingCount = counterstrikeWaitingCount - 1
+    global.counterstrikeWaitingList.splice(global.counterstrikeWaitingList.indexOf(user), 1);
   }
   if (oldMemberChannel == config.destinyRaidJoinRoomID) {
     destinyraidWaitingCount = destinyraidWaitingCount - 1
+    global.destinyraidWaitingList.splice(global.destinyraidWaitingList.indexOf(user), 1);
   }
   if (oldMemberChannel == config.rainbowSixSiegeJoinRoomID) {
     rainbowsixWaitingCount = rainbowsixWaitingCount - 1
+    global.rainbowsixWaitingList.splice(global.rainbowsixWaitingList.indexOf(user), 1);
   }
   if (oldMemberChannel == config.overwatchJoinRoomID) {
     overwatchWaitingCount = overwatchWaitingCount - 1
+    global.overwatchWaitingList.splice(global.overwatchWaitingList.indexOf(user), 1);
   }
 };
