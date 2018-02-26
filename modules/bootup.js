@@ -6,10 +6,6 @@ module.exports = {
      const config = require("../config.json"); // Require the config file for the bot
      const versioninfo = require("../versioninfo.json"); // Require the versioninfo file for the bot
      const sql = require("sqlite"); // SQL Database, requires the sqlite module
-     const mainVersion = versioninfo.mainVersion;
-     const commandsframeworkVersion = versioninfo.commandsframeworkVersion;
-     const loggingframeworkVersion = versioninfo.loggingframeworkVersion;
-     const statstrackVersion = versioninfo.statstrackVersion;
 
      if (config.loginToken == "") {
        throw 'Config.json is not properly setup. Please set this up before attempting to launch the bot.';
@@ -30,10 +26,11 @@ module.exports = {
        console.log(config.botName + " online and ready!");
        console.log(""); // Spacing
        console.log("ACTIVE MODULES:");
-       console.log(' "RAZEBOT Discord Bot Framework" - V' + mainVersion);
-       console.log(' "COMMANDIT Modular Commands System" - V' + commandsframeworkVersion);
-       console.log(' "LOGIT Access Violation And Command Logging System" - V' + loggingframeworkVersion);
-       console.log(' "STATSTRACK Statistics Tracking Backend" - V' + statstrackVersion);
+       console.log(' "RAZEBOT Discord Bot Framework" - V' + versioninfo.mainVersion);
+       console.log(' "COMMANDIT Modular Commands System" - V' + versioninfo.commandsframeworkVersion);
+       console.log(' "LOGIT Access Violation And Command Logging System" - V' + versioninfo.loggingframeworkVersion);
+       console.log(' "STATSTRACK Statistics Tracking Backend" - V' + versioninfo.statstrackVersion);
+       console.log(' "FAIRTEAM Random Team Generator System" - V' + versioninfo.fairteamVersion);
        console.log(""); // Spacing
        console.log("RAZEBOT and all other modules are developed by robotprobot (Steven Wheeler)");
        console.log(" DISCORD: robotprobot#8211");
@@ -50,7 +47,7 @@ module.exports = {
        console.log(""); // Spacing
        console.log("Listening for commands with the " + config.prefix + " prefix!");
        console.log(""); // Spacing
-       client.user.setActivity('on ' + mainVersion + '. "' + config.prefix + ' help"');
+       client.user.setActivity('on ' + versioninfo.mainVersion + '. "' + config.prefix + ' help"');
 
        const counterstrikeVoiceRoom = (client.channels.get(config.counterStrikeJoinRoomID));
        const destinyraidVoiceRoom = (client.channels.get(config.destinyRaidJoinRoomID));
