@@ -5,6 +5,7 @@ exports.run = (message) => {
   const fs = require("fs"); // Prepare file reading
   const config = require("../config.json"); // Require the config file for the bot
   const sql = require("sqlite"); // SQL Database, requires the sqlite module
+  const logging = require('../modules/logging.js');
 
   if (!message.guild) return; // If message is not in server (like a dm), reject
   if (message.author.bot) return; // If the message the bot wants to respond to is from itself, reject to prevent loops
@@ -29,9 +30,7 @@ exports.run = (message) => {
    let commandFile = require(`../commands/${command}.js`); // Search for a corrosponding command
    commandFile.run(client, message, args); // If command exists, run it
    console.log('Command "' + command + '" was found successfully and used by ' + message.author.username + '. (ID: ' + message.author.id + ')');
-   if (config.loggingEnabled == "TRUE" && config.loggingCommand == "TRUE") {
-     fs.appendFileSync('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [COMMAND] - " + 'Command "' + command + '" was found successfully and used by ' + message.author.username + '. (ID: ' + message.author.id + ')');
-   };
+   logging.commandFound(message, command);
    return;
    } catch (err) { // Else tell user that command was not found
    if (config.consoleDebuggingEnabled == "TRUE") {
@@ -39,9 +38,7 @@ exports.run = (message) => {
    };
    console.log('Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
    message.channel.send("Command not recognised");
-   if (config.loggingEnabled == "TRUE" && config.loggingCommand == "TRUE") {
-     fs.appendFileSync('./log.txt', '\n' + new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '') + " (UTC) -   - [COMMAND] - " + 'Command "' + command + '" was not found, requested by ' + message.author.username + '. (ID: ' + message.author.id + ')');
-   };
+   logging.commandNotFound(message, command);
    return;
   }
 };
