@@ -1,7 +1,7 @@
 {
-  "mainVersion": "1.0.5",
+  "mainVersion": "1.0.6",
   "commandsframeworkVersion": "1.0.3",
   "loggingframeworkVersion": "1.0.3",
   "statstrackVersion": "1.0.3",
-  "fairteamVersion": "1.0.0"
+  "fairteamVersion": "1.0.1"
 }

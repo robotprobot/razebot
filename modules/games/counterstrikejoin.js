@@ -27,7 +27,6 @@ exports.run = (newMember) => {
 
     //create channels
 
-
     //move users
     //start game
     //game
